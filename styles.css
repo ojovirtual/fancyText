@@ -3,6 +3,7 @@
 *{ box-sizing: border-box; }
 html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
 header,footer{ padding:16px; text-align:center; }
+footer a { color:var(--accent); }
 h1{ margin:0 0 8px; font-size:24px; }
 main{ padding:16px; display:flex; justify-content:center; }
 .panel{ width:min(840px, 100%); background:var(--card); border:1px solid #222; border-radius:16px; padding:16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
