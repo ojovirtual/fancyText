@@ -37,7 +37,30 @@
     </section>
   </main>
 
-  <script type="module" src="/app.js"></script>
+
+<script type="module">
+  async function loadSharedText() {
+    const cache = await caches.open('share-store');
+    const res = await cache.match('/__share_payload__');
+    if (!res) return ''; // nada que cargar
+    const { title='', text='', url='' } = await res.json();
+    // Limpia para que no se “pegue” en nuevas aperturas
+    await cache.delete('/__share_payload__');
+    return [title, text, url].filter(Boolean).join('\n');
+  }
+
+  (async () => {
+    const incoming = await loadSharedText();
+    if (incoming) {
+      const input = document.getElementById('in');
+      input.value = incoming;
+      // dispara tu evento para autoaplicar estilo si quieres
+      window.dispatchEvent(new CustomEvent('fancy:input-ready'));
+    }
+  })();
+</script>
+
+<script type="module" src="/app.js"></script>
   <script>
     // Intento 1: BroadcastChannel (desde el SW)
     const bc = new BroadcastChannel('share');
