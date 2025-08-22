@@ -1,13 +1,43 @@
 {
 	"name": "FancyText – Compartir y Estilizar",
 	"short_name": "FancyText",
+	"description": "Convierte texto a estilos Unicode elegantes y compártelo fácilmente",
 	"start_url": "/",
 	"display": "standalone",
+	"orientation": "portrait-primary",
 	"background_color": "#0b1220",
 	"theme_color": "#111827",
+	"categories": ["utilities", "productivity"],
+	"lang": "es",
+	"dir": "ltr",
+	"prefer_related_applications": false,
 	"icons": [
-		{ "src": "/icons/192.png", "sizes": "192x192", "type": "image/png" },
-		{ "src": "/icons/512.png", "sizes": "512x512", "type": "image/png" }
+		{ 
+			"src": "/icons/192.png", 
+			"sizes": "192x192", 
+			"type": "image/png",
+			"purpose": "any maskable"
+		},
+		{ 
+			"src": "/icons/512.png", 
+			"sizes": "512x512", 
+			"type": "image/png",
+			"purpose": "any maskable"
+		}
+	],
+	"shortcuts": [
+		{
+			"name": "Texto en negrita",
+			"short_name": "Negrita",
+			"description": "Convierte texto directamente a negrita",
+			"url": "/?style=bold",
+			"icons": [
+				{
+					"src": "/icons/192.png",
+					"sizes": "192x192"
+				}
+			]
+		}
 	],
 	"share_target": {
 		"action": "/share",
