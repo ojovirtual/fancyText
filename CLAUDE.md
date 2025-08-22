@@ -51,3 +51,25 @@ No automated test framework is configured. Test manually by:
 - Testing copy/share functionality
 - Validating PWA installation and offline behavior
 - Testing Web Share Target integration on mobile devices
+
+## Deployment
+
+### Railway Deployment
+
+The project includes Docker configuration for deployment on Railway:
+
+- `Dockerfile` - Uses nginx:alpine for lightweight serving
+- `nginx.conf` - Custom nginx configuration with PWA optimizations
+- `.dockerignore` - Excludes unnecessary files from Docker build
+
+**Key nginx features:**
+- Gzip compression for better performance
+- Correct MIME types for PWA manifest and service worker
+- Cache headers for static assets
+- Security headers
+- Support for Web Share Target POST requests to `/share`
+
+**Deploy to Railway:**
+1. Connect repository to Railway
+2. Railway automatically detects Dockerfile
+3. Deploy with default settings (exposes port 80)

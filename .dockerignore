@@ -1,0 +1,24 @@
+# Git
+.git
+.gitignore
+README.md
+
+# Documentation
+CLAUDE.md
+
+# Node modules (if any)
+node_modules
+npm-debug.log
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
