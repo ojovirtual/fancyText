@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Unicode Font Mappings</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .test-row { margin: 10px 0; padding: 10px; border: 1px solid #ddd; }
+        .original { font-weight: bold; }
+        .converted { font-size: 1.2em; margin-left: 20px; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h1>Test Unicode Font Mappings</h1>
+    <div id="tests"></div>
+
+    <script type="module" src="/app.js"></script>
+    <script>
+        // Test string with letters, numbers, and special characters
+        const testString = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%";
+        
+        window.addEventListener('DOMContentLoaded', () => {
+            const testsContainer = document.getElementById('tests');
+            
+            // Test each style
+            Object.keys(MAPS).forEach(style => {
+                const testDiv = document.createElement('div');
+                testDiv.className = 'test-row';
+                
+                const originalDiv = document.createElement('div');
+                originalDiv.className = 'original';
+                originalDiv.textContent = `${style.toUpperCase()}: ${testString}`;
+                
+                const convertedDiv = document.createElement('div');
+                convertedDiv.className = 'converted';
+                
+                try {
+                    const converted = convert(testString, MAPS[style]);
+                    convertedDiv.textContent = converted;
+                    
+                    // Test reverse conversion
+                    const reversed = toPlain(converted);
+                    if (reversed.replace(/[!@#$%]/g, '') !== testString.replace(/[!@#$%]/g, '')) {
+                        convertedDiv.innerHTML += ' <span class="error">[REVERSE CONVERSION FAILED]</span>';
+                    }
+                } catch (error) {
+                    convertedDiv.innerHTML = `<span class="error">ERROR: ${error.message}</span>`;
+                }
+                
+                testDiv.appendChild(originalDiv);
+                testDiv.appendChild(convertedDiv);
+                testsContainer.appendChild(testDiv);
+            });
+        });
+    </script>
+</body>
+</html>
