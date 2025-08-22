@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Compartido → FancyText</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>Procesar texto compartido</h1>
+  </header>
+  <main>
+    <section class="panel">
+      <label for="in">Texto recibido</label>
+      <textarea id="in" placeholder="Esperando texto del sistema..."></textarea>
+
+      <div class="toolbar">
+        <button data-style="bold">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</button>
+        <button data-style="italic">𝑪𝒖𝒓𝒔𝒊𝒗𝒂</button>
+        <button data-style="mono">ｍｏｎｏ</button>
+        <button id="clear">Texto plano</button>
+      </div>
+
+      <label for="out">Salida</label>
+      <textarea id="out" readonly></textarea>
+
+      <div class="actions">
+        <button id="copy">Copiar</button>
+        <button id="reshare">Compartir</button>
+        <a class="link" href="/">Volver</a>
+      </div>
+
+      <p class="hint">Si no aparece contenido, vuelve a compartir el texto y elige <strong>FancyText</strong>.</p>
+    </section>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+  <script>
+    // Intento 1: BroadcastChannel (desde el SW)
+    const bc = new BroadcastChannel('share');
+    bc.onmessage = (e) => {
+      const { title = '', text = '', url = '' } = e.data || {};
+      const incoming = [title, text, url].filter(Boolean).join('\n');
+      document.getElementById('in').value = incoming;
+      window.dispatchEvent(new CustomEvent('fancy:input-ready'));
+    };
+
+    // Intento 2: query/hash fallback (si se usa redirect con datos mínimos)
+    const params = new URLSearchParams(location.search);
+    if (params.get('text')) {
+      document.getElementById('in').value = params.get('text');
+      window.dispatchEvent(new CustomEvent('fancy:input-ready'));
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,14 @@
+/* styles.css */
+:root { --bg:#0b1220; --fg:#e5e7eb; --muted:#9ca3af; --card:#111827; --accent:#22d3ee; }
+*{ box-sizing: border-box; }
+html,body{ margin:0; padding:0; background:var(--bg); color:var(--fg); font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, 'Helvetica Neue', Arial, 'Noto Sans', 'Apple Color Emoji', 'Segoe UI Emoji'; }
+header,footer{ padding:16px; text-align:center; }
+h1{ margin:0 0 8px; font-size:24px; }
+main{ padding:16px; display:flex; justify-content:center; }
+.panel{ width:min(840px, 100%); background:var(--card); border:1px solid #222; border-radius:16px; padding:16px; box-shadow: 0 10px 30px rgba(0,0,0,.35); }
+label{ display:block; font-weight:600; margin:12px 0 6px; }
+textarea{ width:100%; min-height:120px; background:#0f172a; color:var(--fg); border:1px solid #243042; border-radius:12px; padding:12px; resize:vertical; }
+.toolbar,.actions{ display:flex; gap:8px; flex-wrap:wrap; margin:12px 0; }
+button, .link{ background:#1f2937; color:var(--fg); border:1px solid #334155; padding:10px 14px; border-radius:12px; cursor:pointer; text-decoration:none; }
+button:hover, .link:hover{ border-color:var(--accent); }
+.hint{ color:var(--muted); font-size:12px; }

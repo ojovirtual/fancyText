@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FancyText • PWA</title>
+  <link rel="manifest" href="/manifest.webmanifest">
+  <meta name="theme-color" content="#111827">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header>
+    <h1>FancyText</h1>
+    <p>Convierte texto a estilos Unicode y compártelo. Instálame para usar el menú <em>Compartir</em>.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <label for="in">Entrada</label>
+      <textarea id="in" placeholder="Escribe o pega aquí..."></textarea>
+
+      <div class="toolbar">
+        <button data-style="bold">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</button>
+        <button data-style="italic">𝑪𝒖𝒓𝒔𝒊𝒗𝒂</button>
+        <button data-style="mono">ｍｏｎｏ</button>
+        <button id="clear">Texto plano</button>
+      </div>
+
+      <label for="out">Salida</label>
+      <textarea id="out" readonly></textarea>
+
+      <div class="actions">
+        <button id="copy">Copiar</button>
+        <button id="reshare">Compartir</button>
+      </div>
+
+      <p class="hint">Consejo: hashtags <code>#</code> y menciones <code>@</code> no se convierten.</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>Hecho con ❤️ – Funciona offline. Instala desde el menú del navegador.</small>
+  </footer>
+
+  <script type="module" src="/app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js');
+      });
+    }
+  </script>
+</body>
+</html>
