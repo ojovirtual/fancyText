@@ -350,19 +350,12 @@ async function shareText() {
 }
 
 function bindUI() {
-	// Event listener para cambios en el select - aplicar automáticamente
-	document.getElementById('style-select')?.addEventListener('change', (e) => {
-		const selectedStyle = e.target.value;
-		
-		if (!selectedStyle) {
-			return; // No hacer nada si se selecciona la opción por defecto
-		}
-		
-		const style = selectedStyle === 'plain' ? null : selectedStyle;
-		applyStyleToSelection(style);
-		
-		// Resetear el select después de aplicar
-		e.target.value = '';
+	// Event listeners para botones de estilo
+	document.querySelectorAll('[data-style]').forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const style = btn.dataset.style === 'plain' ? null : btn.dataset.style;
+			applyStyleToSelection(style);
+		});
 	});
 	
 	// Botones de acción

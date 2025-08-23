@@ -29,24 +29,23 @@
       <label for="editor">Texto compartido</label>
       <textarea id="editor" placeholder="Esperando texto del sistema..."></textarea>
 
-      <div class="style-selector">
-        <label for="style-select">Aplicar estilo:</label>
-        <select id="style-select">
-          <option value="">Selecciona un estilo...</option>
-          <option value="bold">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</option>
-          <option value="italic">𝐼𝑡𝑎́𝑙𝑖𝑐𝑎</option>
-          <option value="bolditalic">𝑵𝒆𝒈𝒓𝒊𝒕𝒂 𝑰𝒕𝒂́𝒍𝒊𝒄𝒂</option>
-          <option value="script">𝒮𝒸𝓇𝒾𝓅𝓉</option>
-          <option value="boldscript">𝓑𝓸𝓵𝓭 𝓢𝓬𝓻𝓲𝓅𝓽</option>
-          <option value="doublestruck">𝔻𝕠𝔲𝔟𝔩𝔢 𝕊𝔱𝔯𝔲𝔠𝔨</option>
-          <option value="mono">ｍｏｎｏｓｐａｃｅ</option>
-          <option value="sans">𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿</option>
-          <option value="sansbold">𝗦𝗮𝗻𝘀 𝗕𝗼𝗅𝗱</option>
-          <option value="sansitalic">𝘚𝘢𝘯𝘀 𝘐𝘵𝘢́𝘭𝘪𝘤𝘢</option>
-          <option value="circled">Ⓒⓘⓡⓒⓤⓛⓞ</option>
-          <option value="squared">🅂🅀🅄🄰🅁🄴🄳</option>
-          <option value="plain">Texto plano</option>
-        </select>
+      <div class="style-toolbar">
+        <label>Aplicar estilo:</label>
+        <div class="style-buttons">
+          <button data-style="bold" class="style-btn" title="Negrita">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</button>
+          <button data-style="italic" class="style-btn" title="Cursiva">𝐼𝑡𝑎́𝑙𝑖𝑐𝑎</button>
+          <button data-style="bolditalic" class="style-btn" title="Negrita Cursiva">𝑵𝒆𝒈𝒓𝒊𝒕𝒂 𝑰𝒕𝒂́𝒍𝒊𝒄𝒂</button>
+          <button data-style="script" class="style-btn" title="Script">𝒮𝒸𝓇𝒾𝓅𝓉</button>
+          <button data-style="boldscript" class="style-btn" title="Bold Script">𝓑𝓸𝓵𝓭 𝓢𝓬𝓻𝓲𝓅𝓽</button>
+          <button data-style="doublestruck" class="style-btn" title="Double Struck">𝔻𝕠𝔲𝔟𝔩𝔢 𝕊𝔱𝔯𝔲𝔠𝔨</button>
+          <button data-style="mono" class="style-btn" title="Monospace">ｍｏｎｏ</button>
+          <button data-style="sans" class="style-btn" title="Sans-Serif">𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿</button>
+          <button data-style="sansbold" class="style-btn" title="Sans Bold">𝗦𝗮𝗻𝘀 𝗕𝗼𝗅𝗱</button>
+          <button data-style="sansitalic" class="style-btn" title="Sans Cursiva">𝘚𝘢𝘯𝘀 𝘐𝘵𝘢́𝘭𝘪𝘤𝘢</button>
+          <button data-style="circled" class="style-btn" title="Círculos">Ⓒⓘⓡⓒⓤⓛⓞ</button>
+          <button data-style="squared" class="style-btn" title="Cuadrados">🅂🅀🅄🄰🅁🄴🄳</button>
+          <button data-style="plain" class="style-btn plain-btn" title="Texto plano">Texto plano</button>
+        </div>
       </div>
 
       <div class="actions">
@@ -62,7 +61,7 @@
         <a class="link" href="/" title="Volver">← Volver</a>
       </div>
 
-      <p class="hint">Selecciona texto y elige un estilo del desplegable. Si no aparece contenido, vuelve a compartir y elige <strong>FancyText</strong>.</p>
+      <p class="hint">Selecciona texto y haz clic en un estilo. Si no aparece contenido, vuelve a compartir y elige <strong>FancyText</strong>.</p>
     </section>
   </main>
 
