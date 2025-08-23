@@ -1,5 +1,8 @@
-const textIn = () => document.getElementById('in');
-const textOut = () => document.getElementById('out');
+const editor = () => document.getElementById('editor');
+
+// Sistema de historial para deshacer
+let history = [];
+let historyIndex = -1;
 
 // --- Mapeos Unicode por código de carácter ---
 const MAPS = {
@@ -220,35 +223,191 @@ function toPlain(input) {
 	return [...input].map((ch) => inverse.get(ch) || ch).join('');
 }
 
-function applyStyle(style) {
-	const src = textIn().value;
-	const out = style ? convert(src, MAPS[style]) : toPlain(src);
-	textOut().value = out;
+// Guardar estado en el historial
+function saveState() {
+	const currentValue = editor().value;
+	
+	// Solo guardamos si es diferente al último estado
+	if (history.length === 0 || history[historyIndex] !== currentValue) {
+		// Si no estamos al final del historial, eliminamos los estados posteriores
+		if (historyIndex < history.length - 1) {
+			history = history.slice(0, historyIndex + 1);
+		}
+		
+		history.push(currentValue);
+		historyIndex = history.length - 1;
+		
+		// Limitamos el historial a 50 estados
+		if (history.length > 50) {
+			history.shift();
+			historyIndex--;
+		}
+	}
+}
+
+// Aplicar estilo al texto seleccionado
+function applyStyleToSelection(style) {
+	const textarea = editor();
+	const start = textarea.selectionStart;
+	const end = textarea.selectionEnd;
+	const text = textarea.value;
+	
+	// Si no hay selección, aplicar a todo el texto
+	if (start === end) {
+		saveState();
+		const converted = style ? convert(text, MAPS[style]) : toPlain(text);
+		textarea.value = converted;
+		toast(`Estilo ${getStyleName(style)} aplicado a todo el texto`);
+		return;
+	}
+	
+	// Aplicar estilo solo al texto seleccionado
+	saveState();
+	const selectedText = text.substring(start, end);
+	const convertedText = style ? convert(selectedText, MAPS[style]) : toPlain(selectedText);
+	
+	const newText = text.substring(0, start) + convertedText + text.substring(end);
+	textarea.value = newText;
+	
+	// Mantener la selección en el texto convertido
+	const newEnd = start + convertedText.length;
+	textarea.setSelectionRange(start, newEnd);
+	textarea.focus();
+	
+	toast(`Estilo ${getStyleName(style)} aplicado a la selección`);
+}
+
+// Obtener nombre del estilo para mostrar
+function getStyleName(style) {
+	const names = {
+		bold: 'negrita',
+		italic: 'cursiva',
+		bolditalic: 'negrita cursiva',
+		script: 'script',
+		boldscript: 'bold script',
+		doublestruck: 'double struck',
+		mono: 'monospace',
+		sans: 'sans-serif',
+		sansbold: 'sans negrita',
+		sansitalic: 'sans cursiva',
+		circled: 'círculos',
+		squared: 'cuadrados'
+	};
+	return names[style] || 'texto plano';
+}
+
+// Función para deshacer
+function undo() {
+	if (historyIndex > 0) {
+		historyIndex--;
+		editor().value = history[historyIndex];
+		toast('Deshecho aplicado');
+	} else {
+		toast('No hay más acciones para deshacer');
+	}
+}
+
+// Función para copiar
+async function copyText() {
+	const text = editor().value;
+	if (!text.trim()) {
+		toast('No hay texto para copiar');
+		return;
+	}
+	
+	try {
+		await navigator.clipboard.writeText(text);
+		toast('¡Texto copiado al portapapeles!');
+	} catch (err) {
+		toast('Error al copiar texto');
+	}
+}
+
+// Función para compartir
+async function shareText() {
+	const text = editor().value;
+	if (!text.trim()) {
+		toast('No hay texto para compartir');
+		return;
+	}
+	
+	try {
+		if (navigator.share) {
+			await navigator.share({ 
+				text,
+				title: 'Texto con estilo de FancyText'
+			});
+		} else {
+			await navigator.clipboard.writeText(text);
+			toast('Compartir no disponible. Texto copiado al portapapeles.');
+		}
+	} catch (err) {
+		if (err.name !== 'AbortError') {
+			await navigator.clipboard.writeText(text);
+			toast('Error al compartir. Texto copiado al portapapeles.');
+		}
+	}
 }
 
 function bindUI() {
-	document.querySelectorAll('[data-style]').forEach((btn) => {
-		btn.addEventListener('click', () => applyStyle(btn.dataset.style));
+	// Event listener para cambios en el select - aplicar automáticamente
+	document.getElementById('style-select')?.addEventListener('change', (e) => {
+		const selectedStyle = e.target.value;
+		
+		if (!selectedStyle) {
+			return; // No hacer nada si se selecciona la opción por defecto
+		}
+		
+		const style = selectedStyle === 'plain' ? null : selectedStyle;
+		applyStyleToSelection(style);
+		
+		// Resetear el select después de aplicar
+		e.target.value = '';
 	});
-	document.getElementById('clear')?.addEventListener('click', () => {
-		textOut().value = toPlain(textIn().value);
-	});
-	document.getElementById('copy')?.addEventListener('click', async () => {
-		await navigator.clipboard.writeText(textOut().value || '');
-		toast('¡Copiado al portapapeles!');
-	});
-	document.getElementById('reshare')?.addEventListener('click', async () => {
-		const text = textOut().value || textIn().value || '';
-		if (navigator.share) {
-			await navigator.share({ text });
-		} else {
-			await navigator.clipboard.writeText(text);
-			toast('Compartir no disponible. Texto copiado.');
+	
+	// Botones de acción
+	document.getElementById('undo')?.addEventListener('click', undo);
+	document.getElementById('copy')?.addEventListener('click', copyText);
+	document.getElementById('share')?.addEventListener('click', shareText);
+	
+	// Guardar estado inicial cuando el usuario empieza a escribir
+	const textarea = editor();
+	let isFirstInput = true;
+	
+	textarea.addEventListener('input', () => {
+		if (isFirstInput) {
+			// Guardamos el estado inicial vacío
+			if (history.length === 0) {
+				history.push('');
+				historyIndex = 0;
+			}
+			isFirstInput = false;
 		}
 	});
+	
+	// Atajos de teclado
+	textarea.addEventListener('keydown', (e) => {
+		// Ctrl+Z para deshacer
+		if (e.ctrlKey && e.key === 'z' && !e.shiftKey) {
+			e.preventDefault();
+			undo();
+		}
+		// Ctrl+C para copiar (solo si hay selección)
+		else if (e.ctrlKey && e.key === 'c' && textarea.selectionStart !== textarea.selectionEnd) {
+			// Dejar que el navegador maneje la copia de la selección
+			return;
+		}
+		// Ctrl+A para seleccionar todo
+		else if (e.ctrlKey && e.key === 'a') {
+			// Dejar que el navegador maneje la selección
+			return;
+		}
+	});
+	
 	// Autoaplicar cuando llegue contenido desde /share
 	window.addEventListener('fancy:input-ready', () => {
-		applyStyle('bold');
+		saveState();
+		applyStyleToSelection('bold');
 	});
 }
 

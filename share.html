@@ -26,35 +26,43 @@
   </header>
   <main>
     <section class="panel">
-      <label for="in">Texto recibido</label>
-      <textarea id="in" placeholder="Esperando texto del sistema..."></textarea>
+      <label for="editor">Texto compartido</label>
+      <textarea id="editor" placeholder="Esperando texto del sistema..."></textarea>
 
-      <div class="toolbar">
-        <button data-style="bold">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</button>
-        <button data-style="italic">𝐼𝑡𝑎́𝑙𝑖𝑐𝑎</button>
-        <button data-style="bolditalic">𝑵𝒆𝒈𝒓𝒊𝒕𝒂 𝑰𝒕𝒂́𝒍𝒊𝒄𝒂</button>
-        <button data-style="script">𝒮𝒸𝓇𝒾𝓅𝓉</button>
-        <button data-style="boldscript">𝓑𝓸𝓵𝓭 𝓢𝓬𝓻𝓲𝓅𝓽</button>
-        <button data-style="doublestruck">𝔻𝕠𝔲𝔟𝔩𝔢 𝕊𝔱𝔯𝔲𝔠𝔨</button>
-        <button data-style="mono">ｍｏｎｏ</button>
-        <button data-style="sans">𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿</button>
-        <button data-style="sansbold">𝗦𝗮𝗻𝘀 𝗕𝗼𝗹𝗱</button>
-        <button data-style="sansitalic">𝘚𝘢𝘯𝘴 𝘐𝘵𝘢́𝘭𝘪𝘤𝘢</button>
-        <button data-style="circled">Ⓒⓘⓡⓒⓤⓛⓞ</button>
-        <button data-style="squared">🅂🅀🅄🄰🅁🄴🄳</button>
-        <button id="clear">Texto plano</button>
+      <div class="style-selector">
+        <label for="style-select">Aplicar estilo:</label>
+        <select id="style-select">
+          <option value="">Selecciona un estilo...</option>
+          <option value="bold">𝐍𝐞𝐠𝐫𝐢𝐭𝐚</option>
+          <option value="italic">𝐼𝑡𝑎́𝑙𝑖𝑐𝑎</option>
+          <option value="bolditalic">𝑵𝒆𝒈𝒓𝒊𝒕𝒂 𝑰𝒕𝒂́𝒍𝒊𝒄𝒂</option>
+          <option value="script">𝒮𝒸𝓇𝒾𝓅𝓉</option>
+          <option value="boldscript">𝓑𝓸𝓵𝓭 𝓢𝓬𝓻𝓲𝓅𝓽</option>
+          <option value="doublestruck">𝔻𝕠𝔲𝔟𝔩𝔢 𝕊𝔱𝔯𝔲𝔠𝔨</option>
+          <option value="mono">ｍｏｎｏｓｐａｃｅ</option>
+          <option value="sans">𝖲𝖺𝗇𝗌-𝖲𝖾𝗋𝗂𝖿</option>
+          <option value="sansbold">𝗦𝗮𝗻𝘀 𝗕𝗼𝗅𝗱</option>
+          <option value="sansitalic">𝘚𝘢𝘯𝘀 𝘐𝘵𝘢́𝘭𝘪𝘤𝘢</option>
+          <option value="circled">Ⓒⓘⓡⓒⓤⓛⓞ</option>
+          <option value="squared">🅂🅀🅄🄰🅁🄴🄳</option>
+          <option value="plain">Texto plano</option>
+        </select>
       </div>
-
-      <label for="out">Salida</label>
-      <textarea id="out" readonly></textarea>
 
       <div class="actions">
-        <button id="copy">Copiar</button>
-        <button id="reshare">Compartir</button>
-        <a class="link" href="/">Volver</a>
+        <button id="undo" title="Deshacer">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z"/></svg>
+        </button>
+        <button id="copy" title="Copiar">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z"/></svg>
+        </button>
+        <button id="share" title="Compartir">
+          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M680-80q-50 0-85-35t-35-85q0-6 3-28L282-392q-16 15-37 23.5t-45 8.5q-50 0-85-35t-35-85q0-50 35-85t85-35q24 0 45 8.5t37 23.5l281-164q-2-7-2.5-13.5T560-760q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35q-24 0-45-8.5T598-672L317-508q2 7 2.5 13.5t.5 14.5q0 8-.5 14.5T317-452l281 164q16-15 37-23.5t45-8.5q50 0 85 35t35 85q0 50-35 85t-85 35Zm0-80q17 0 28.5-11.5T720-200q0-17-11.5-28.5T680-240q-17 0-28.5 11.5T640-200q0 17 11.5 28.5T680-160ZM200-440q17 0 28.5-11.5T240-480q0-17-11.5-28.5T200-520q-17 0-28.5 11.5T160-480q0 17 11.5 28.5T200-440Zm480-280q17 0 28.5-11.5T720-760q0-17-11.5-28.5T680-800q-17 0-28.5 11.5T640-760q0 17 11.5 28.5T680-720Zm0 520ZM200-480Zm480-280Z"/></svg>
+        </button>
+        <a class="link" href="/" title="Volver">← Volver</a>
       </div>
 
-      <p class="hint">Si no aparece contenido, vuelve a compartir el texto y elige <strong>FancyText</strong>.</p>
+      <p class="hint">Selecciona texto y elige un estilo del desplegable. Si no aparece contenido, vuelve a compartir y elige <strong>FancyText</strong>.</p>
     </section>
   </main>
 
@@ -65,7 +73,7 @@
     const res = await cache.match('/__share_payload__');
     if (!res) return ''; // nada que cargar
     const { title='', text='', url='' } = await res.json();
-    // Limpia para que no se “pegue” en nuevas aperturas
+    // Limpia para que no se "pegue" en nuevas aperturas
     await cache.delete('/__share_payload__');
     return [title, text, url].filter(Boolean).join('\n');
   }
@@ -73,7 +81,7 @@
   (async () => {
     const incoming = await loadSharedText();
     if (incoming) {
-      const input = document.getElementById('in');
+      const input = document.getElementById('editor');
       input.value = incoming;
       // dispara tu evento para autoaplicar estilo si quieres
       window.dispatchEvent(new CustomEvent('fancy:input-ready'));
@@ -88,14 +96,14 @@
     bc.onmessage = (e) => {
       const { title = '', text = '', url = '' } = e.data || {};
       const incoming = [title, text, url].filter(Boolean).join('\n');
-      document.getElementById('in').value = incoming;
+      document.getElementById('editor').value = incoming;
       window.dispatchEvent(new CustomEvent('fancy:input-ready'));
     };
 
     // Intento 2: query/hash fallback (si se usa redirect con datos mínimos)
     const params = new URLSearchParams(location.search);
     if (params.get('text')) {
-      document.getElementById('in').value = params.get('text');
+      document.getElementById('editor').value = params.get('text');
       window.dispatchEvent(new CustomEvent('fancy:input-ready'));
     }
   </script>
