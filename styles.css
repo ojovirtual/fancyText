@@ -285,3 +285,88 @@ button:active, .link:active {
   transform: translateX(0);
   opacity: 1;
 }
+
+/* Update notification */
+.update-notification {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-100%);
+  background: var(--accent);
+  color: white;
+  padding: 12px 16px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px var(--shadow);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 1001;
+  max-width: 90vw;
+}
+
+.update-notification.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.update-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.update-notification button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  margin: 0;
+}
+
+.update-notification button:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: none;
+  box-shadow: none;
+}
+
+#update-app {
+  background: white;
+  color: var(--accent);
+  border-color: white;
+}
+
+#update-app:hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+#dismiss-update {
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 16px;
+  line-height: 1;
+}
+
+/* Responsive para móvil */
+@media (max-width: 640px) {
+  .update-notification {
+    left: 16px;
+    right: 16px;
+    transform: translateY(-100%);
+    max-width: none;
+  }
+  
+  .update-notification.show {
+    transform: translateY(0);
+  }
+}

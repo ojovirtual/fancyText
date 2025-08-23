@@ -421,4 +421,92 @@ function toast(msg) {
 	setTimeout(() => el.remove(), 2600);
 }
 
-window.addEventListener('DOMContentLoaded', bindUI);
+// Manejar actualizaciones del Service Worker
+function handleServiceWorkerUpdates() {
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.addEventListener('message', (event) => {
+			const { type, version, url } = event.data;
+			
+			if (type === 'SW_UPDATED') {
+				console.log('[App] Service Worker actualizado a versión:', version);
+				showUpdateNotification();
+			}
+			
+			if (type === 'CONTENT_UPDATED') {
+				console.log('[App] Contenido actualizado:', url);
+				showUpdateNotification();
+			}
+		});
+		
+		// Comprobar actualizaciones al cargar
+		navigator.serviceWorker.ready.then((registration) => {
+			if (registration.waiting) {
+				showUpdateNotification();
+			}
+		});
+	}
+}
+
+function showUpdateNotification() {
+	// Evitar mostrar múltiples notificaciones
+	if (document.querySelector('.update-notification')) {
+		return;
+	}
+	
+	const notification = document.createElement('div');
+	notification.className = 'update-notification';
+	notification.innerHTML = `
+		<div class="update-content">
+			<span>Nueva versión disponible</span>
+			<button id="update-app">Actualizar</button>
+			<button id="dismiss-update">×</button>
+		</div>
+	`;
+	
+	document.body.appendChild(notification);
+	
+	// Mostrar la notificación
+	setTimeout(() => notification.classList.add('show'), 100);
+	
+	// Event listeners
+	document.getElementById('update-app')?.addEventListener('click', () => {
+		updateApp();
+	});
+	
+	document.getElementById('dismiss-update')?.addEventListener('click', () => {
+		dismissUpdateNotification();
+	});
+	
+	// Auto-dismiss después de 10 segundos
+	setTimeout(() => {
+		if (document.querySelector('.update-notification')) {
+			dismissUpdateNotification();
+		}
+	}, 10000);
+}
+
+function updateApp() {
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.ready.then((registration) => {
+			if (registration.waiting) {
+				// Activar el service worker que está esperando
+				registration.waiting.postMessage({ type: 'SKIP_WAITING' });
+			}
+			// Recargar la página para aplicar los cambios
+			window.location.reload();
+		});
+	}
+}
+
+function dismissUpdateNotification() {
+	const notification = document.querySelector('.update-notification');
+	if (notification) {
+		notification.classList.remove('show');
+		setTimeout(() => notification.remove(), 300);
+	}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+	bindUI();
+	handleServiceWorkerUpdates();
+});
