@@ -1,6 +1,11 @@
-# FancyText PWA – Share Target Boilerplate
+# 𝐅𝐚𝐧𝐜𝐲𝐓𝐞𝐱𝐭 - Generador de Negritas y Cursivas para Instagram, Facebook y WhatsApp
 
-Este proyecto es una **Progressive Web App (PWA)** que convierte texto en diferentes estilos tipográficos Unicode (negritas, cursivas, monoespaciado, etc.) y permite integrarse con el menú **Compartir** de Android gracias a la API de **Web Share Target**.
+[![Demo](https://img.shields.io/badge/Demo-fancytext.com.es-blue)](https://fancytext.com.es)
+[![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+
+**Generador GRATIS** de texto con formato para redes sociales. Convierte tu texto normal a **𝐧𝐞𝐠𝐫𝐢𝐭𝐚**, *𝑐𝑢𝑟𝑠𝑖𝑣𝑎* y más estilos Unicode para usar en Instagram, Facebook, WhatsApp, TikTok y Twitter.
+
+Este proyecto es una **Progressive Web App (PWA)** que convierte texto en diferentes estilos tipográficos Unicode y se integra con el menú **Compartir** de Android mediante la **Web Share Target API**.
 
 ---
 

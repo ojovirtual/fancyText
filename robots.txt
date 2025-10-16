@@ -1,0 +1,8 @@
+# robots.txt para FancyText
+User-agent: *
+Allow: /
+Disallow: /sw.js
+Disallow: /manifest.webmanifest
+
+# Sitemap
+Sitemap: https://fancytext.com.es/sitemap.xml

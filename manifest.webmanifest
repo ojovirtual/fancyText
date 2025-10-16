@@ -1,7 +1,7 @@
 {
-	"name": "FancyText – Compartir y Estilizar",
+	"name": "FancyText - Negritas y Cursivas para Instagram",
 	"short_name": "FancyText",
-	"description": "Convierte texto a estilos Unicode elegantes y compártelo fácilmente",
+	"description": "Generador de negritas, cursivas y letras bonitas para Instagram, Facebook y WhatsApp. Gratis y sin registro.",
 	"start_url": "/",
 	"display": "standalone",
 	"orientation": "portrait-primary",
