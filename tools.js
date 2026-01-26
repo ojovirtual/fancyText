@@ -190,6 +190,90 @@ export function initSeparators() {
 }
 
 // ============================================
+// 5. SÍMBOLOS AESTHETIC
+// ============================================
+export async function initAestheticSymbols() {
+	try {
+		// Cargar el JSON con los símbolos
+		const response = await fetch('/data/aesthetic-symbols.json');
+		const data = await response.json();
+
+		const categoryButtons = document.getElementById('category-buttons');
+		const symbolsContainer = document.getElementById('symbols-container');
+
+		if (!categoryButtons || !symbolsContainer) return;
+
+		let currentCategory = 'all';
+
+		// Generar botones de categorías
+		Object.entries(data.categories).forEach(([key, category]) => {
+			const btn = document.createElement('button');
+			btn.dataset.category = key;
+			btn.className = 'category-btn';
+			btn.textContent = category.name;
+			categoryButtons.appendChild(btn);
+
+			btn.addEventListener('click', () => {
+				document.querySelector('.category-btn.active')?.classList.remove('active');
+				btn.classList.add('active');
+				currentCategory = key;
+				filterSymbols();
+			});
+		});
+
+		// Generar tarjetas de símbolos
+		Object.entries(data.categories).forEach(([categoryKey, category]) => {
+			category.symbols.forEach(symbol => {
+				const card = document.createElement('div');
+				card.className = 'separator-card';
+				card.dataset.category = categoryKey;
+
+				const preview = document.createElement('div');
+				preview.className = 'separator-preview';
+				preview.textContent = symbol;
+
+				const copyBtn = document.createElement('button');
+				copyBtn.className = 'copy-separator';
+				copyBtn.textContent = 'Copiar';
+
+				copyBtn.addEventListener('click', async () => {
+					try {
+						await navigator.clipboard.writeText(symbol);
+						const originalText = copyBtn.textContent;
+						copyBtn.textContent = '¡Copiado!';
+						copyBtn.style.background = '#10b981';
+						setTimeout(() => {
+							copyBtn.textContent = originalText;
+							copyBtn.style.background = '';
+						}, 1500);
+					} catch (err) {
+						copyBtn.textContent = 'Error';
+						setTimeout(() => copyBtn.textContent = 'Copiar', 1500);
+					}
+				});
+
+				card.appendChild(preview);
+				card.appendChild(copyBtn);
+				symbolsContainer.appendChild(card);
+			});
+		});
+
+		function filterSymbols() {
+			document.querySelectorAll('.separator-card').forEach(card => {
+				if (currentCategory === 'all' || card.dataset.category === currentCategory) {
+					card.style.display = 'block';
+				} else {
+					card.style.display = 'none';
+				}
+			});
+		}
+
+	} catch (err) {
+		console.error('Error cargando símbolos aesthetic:', err);
+	}
+}
+
+// ============================================
 // AUTO-INIT basado en la página actual
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
@@ -203,5 +287,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		initTextInverter();
 	} else if (path.includes('separadores-instagram')) {
 		initSeparators();
+	} else if (path.includes('simbolos-aesthetic')) {
+		initAestheticSymbols();
 	}
 });

@@ -1,14 +1,16 @@
-const CACHE_NAME = 'fancy-v4';
-const CACHE_VERSION = '4.0.0';
+const CACHE_NAME = 'fancy-v5';
+const CACHE_VERSION = '5.0.0';
 const urlsToCache = [
 	'/',
 	'/index.html',
 	'/share.html',
 	'/styles.css',
 	'/app.js',
+	'/tools.js',
 	'/manifest.webmanifest',
 	'/sitemap.xml',
 	'/robots.txt',
+	'/data/aesthetic-symbols.json',
 	// Landing pages
 	'/letras-bonitas-whatsapp/',
 	'/cursiva-instagram/',
@@ -17,7 +19,12 @@ const urlsToCache = [
 	'/letras-goticas/',
 	'/texto-tachado/',
 	'/letras-circulo/',
-	'/letras-cuadrado/'
+	'/letras-cuadrado/',
+	'/contador-caracteres/',
+	'/espacio-invisible/',
+	'/invertir-texto/',
+	'/separadores-instagram/',
+	'/simbolos-aesthetic/'
 ];
 
 // Variable para controlar si hay actualizaciones disponibles

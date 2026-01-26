@@ -46,9 +46,9 @@
 			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
 		},
 		{
-			"name": "Letras Góticas",
-			"short_name": "Góticas",
-			"url": "/letras-goticas/",
+			"name": "Símbolos Aesthetic",
+			"short_name": "Símbolos",
+			"url": "/simbolos-aesthetic/",
 			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
 		}
 	],

@@ -3,7 +3,9 @@
     "allow": [
       "Bash(for file in letras-goticas/index.html texto-tachado/index.html letras-circulo/index.html letras-cuadrado/index.html contador-caracteres/index.html espacio-invisible/index.html invertir-texto/index.html)",
       "Bash(do echo \"Actualizando $file...\")",
-      "Bash(done)"
+      "Bash(done)",
+      "Bash(for file in \"c:\\AutomIA\\fancyText\\index.html\" \"c:\\AutomIA\\fancyText\\letras-goticas\\index.html\" \"c:\\AutomIA\\fancyText\\texto-tachado\\index.html\" \"c:\\AutomIA\\fancyText\\letras-circulo\\index.html\" \"c:\\AutomIA\\fancyText\\letras-cuadrado\\index.html\" \"c:\\AutomIA\\fancyText\\contador-caracteres\\index.html\" \"c:\\AutomIA\\fancyText\\espacio-invisible\\index.html\" \"c:\\AutomIA\\fancyText\\invertir-texto\\index.html\")",
+      "Bash(do echo \"Procesando: $file\")"
     ],
     "deny": [],
     "ask": []
