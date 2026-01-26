@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in letras-goticas/index.html texto-tachado/index.html letras-circulo/index.html letras-cuadrado/index.html contador-caracteres/index.html espacio-invisible/index.html invertir-texto/index.html)",
+      "Bash(do echo \"Actualizando $file...\")",
+      "Bash(done)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

@@ -465,6 +465,42 @@ button:active, .link:active {
   transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
+.nav-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.home-link {
+  text-decoration: none;
+  font-size: 24px;
+  line-height: 1;
+  transition: transform 0.2s ease;
+}
+
+.home-link:hover {
+  transform: scale(1.1);
+}
+
+.nav-toggle {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--fg);
+  font-size: 24px;
+  cursor: pointer;
+  padding: 4px;
+  margin-left: auto;
+}
+
+.nav-menu {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .main-nav > a {
   color: var(--fg);
   text-decoration: none;
@@ -540,11 +576,31 @@ button:active, .link:active {
 }
 
 /* Mobile navigation */
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .main-nav {
+    flex-wrap: nowrap;
+    padding: 8px 16px;
+  }
+
+  .nav-header {
+    width: 100%;
+  }
+
+  .nav-toggle {
+    display: block;
+  }
+
+  .nav-menu {
+    display: none;
+    width: 100%;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
+    margin-top: 12px;
+  }
+
+  .nav-menu.active {
+    display: flex;
   }
 
   .nav-dropdown {
@@ -663,5 +719,177 @@ button:active, .link:active {
   .footer-links {
     grid-template-columns: 1fr;
     gap: 16px;
+  }
+}
+
+/* ============================================
+   ESTILOS PARA HERRAMIENTAS SATÉLITE
+   ============================================ */
+
+/* Contador de caracteres */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.stat-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.stat-value {
+  display: block;
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 4px;
+}
+
+.stat-label {
+  display: block;
+  font-size: 13px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.limits-section {
+  margin-top: 32px;
+}
+
+.limit-bar {
+  margin-bottom: 20px;
+}
+
+.limit-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--button-bg);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: var(--accent);
+  transition: width 0.3s ease, background 0.3s ease;
+}
+
+/* Espacio invisible & Separadores */
+.invisible-chars, .separator-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+  margin: 24px 0;
+}
+
+.char-card, .separator-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  transition: all 0.2s ease;
+}
+
+.char-card:hover, .separator-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+.char-card h3 {
+  font-size: 16px;
+  margin: 0 0 8px 0;
+}
+
+.char-card code {
+  display: block;
+  font-size: 12px;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+
+.copy-char-btn, .copy-separator {
+  width: 100%;
+  padding: 10px 16px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.separator-preview {
+  font-size: 18px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: var(--bg);
+  border-radius: 8px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.separator-categories {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+
+.category-btn, .mode-btn {
+  padding: 8px 16px;
+  background: var(--button-bg);
+  color: var(--fg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.category-btn:hover, .mode-btn:hover {
+  background: var(--accent);
+  color: white;
+}
+
+.category-btn.active, .mode-btn.active {
+  background: var(--accent);
+  color: white;
+}
+
+.mode-selector {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+  .stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .invisible-chars, .separator-grid {
+    grid-template-columns: 1fr;
+  }
+  .mode-selector {
+    flex-direction: column;
   }
 }

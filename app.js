@@ -600,3 +600,38 @@ window.addEventListener('DOMContentLoaded', () => {
 	bindUI();
 	handleServiceWorkerUpdates();
 });
+// Mobile navigation toggle
+document.addEventListener('DOMContentLoaded', () => {
+	const navToggle = document.querySelector('.nav-toggle');
+	const navMenu = document.querySelector('.nav-menu');
+	
+	if (navToggle && navMenu) {
+		navToggle.addEventListener('click', () => {
+			navMenu.classList.toggle('active');
+			const isActive = navMenu.classList.contains('active');
+			navToggle.setAttribute('aria-expanded', isActive);
+			navToggle.textContent = isActive ? '✕' : '☰';
+		});
+
+		// Close menu when clicking dropdown items on mobile
+		const dropdownLinks = navMenu.querySelectorAll('.dropdown-content a');
+		dropdownLinks.forEach(link => {
+			link.addEventListener('click', () => {
+				if (window.innerWidth <= 768) {
+					navMenu.classList.remove('active');
+					navToggle.setAttribute('aria-expanded', 'false');
+					navToggle.textContent = '☰';
+				}
+			});
+		});
+
+		// Close menu when clicking outside
+		document.addEventListener('click', (e) => {
+			if (!e.target.closest('.main-nav') && navMenu.classList.contains('active')) {
+				navMenu.classList.remove('active');
+				navToggle.setAttribute('aria-expanded', 'false');
+				navToggle.textContent = '☰';
+			}
+		});
+	}
+});
