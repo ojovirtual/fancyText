@@ -31,12 +31,25 @@
 			"short_name": "Negrita",
 			"description": "Convierte texto directamente a negrita",
 			"url": "/?style=bold",
-			"icons": [
-				{
-					"src": "/icons/192.png",
-					"sizes": "192x192"
-				}
-			]
+			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
+		},
+		{
+			"name": "Letras para WhatsApp",
+			"short_name": "WhatsApp",
+			"url": "/letras-bonitas-whatsapp/",
+			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
+		},
+		{
+			"name": "Cursiva Instagram",
+			"short_name": "Cursiva",
+			"url": "/cursiva-instagram/",
+			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
+		},
+		{
+			"name": "Letras Góticas",
+			"short_name": "Góticas",
+			"url": "/letras-goticas/",
+			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
 		}
 	],
 	"share_target": {

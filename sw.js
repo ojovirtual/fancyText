@@ -1,6 +1,24 @@
-const CACHE_NAME = 'fancy-v3';
-const CACHE_VERSION = '3.0.0';
-const urlsToCache = ['/', '/index.html', '/share.html', '/styles.css', '/app.js', '/manifest.webmanifest'];
+const CACHE_NAME = 'fancy-v4';
+const CACHE_VERSION = '4.0.0';
+const urlsToCache = [
+	'/',
+	'/index.html',
+	'/share.html',
+	'/styles.css',
+	'/app.js',
+	'/manifest.webmanifest',
+	'/sitemap.xml',
+	'/robots.txt',
+	// Landing pages
+	'/letras-bonitas-whatsapp/',
+	'/cursiva-instagram/',
+	'/letras-aesthetic/',
+	'/fuentes-tiktok/',
+	'/letras-goticas/',
+	'/texto-tachado/',
+	'/letras-circulo/',
+	'/letras-cuadrado/'
+];
 
 // Variable para controlar si hay actualizaciones disponibles
 let updateAvailable = false;

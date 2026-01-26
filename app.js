@@ -181,15 +181,74 @@ const MAPS = {
 	// Squared - A-Z (65-90), a-z (97-122)
 	squared: new Map([
 		// A-Z
-		[65, '🄰'], [66, '🄱'], [67, '🄲'], [68, '🄳'], [69, '🄴'], [70, '🄵'], [71, '🄶'], [72, '🄷'], 
-		[73, '🄸'], [74, '🄹'], [75, '🄺'], [76, '🄻'], [77, '🄼'], [78, '🄽'], [79, '🄾'], [80, '🄿'], 
-		[81, '🅀'], [82, '🅁'], [83, '🅂'], [84, '🅃'], [85, '🅄'], [86, '🅅'], [87, '🅆'], [88, '🅇'], 
+		[65, '🄰'], [66, '🄱'], [67, '🄲'], [68, '🄳'], [69, '🄴'], [70, '🄵'], [71, '🄶'], [72, '🄷'],
+		[73, '🄸'], [74, '🄹'], [75, '🄺'], [76, '🄻'], [77, '🄼'], [78, '🄽'], [79, '🄾'], [80, '🄿'],
+		[81, '🅀'], [82, '🅁'], [83, '🅂'], [84, '🅃'], [85, '🅄'], [86, '🅅'], [87, '🅆'], [88, '🅇'],
 		[89, '🅈'], [90, '🅉'],
 		// a-z
-		[97, '🅰'], [98, '🅱'], [99, '🅲'], [100, '🅳'], [101, '🅴'], [102, '🅵'], [103, '🅶'], [104, '🅷'], 
-		[105, '🅸'], [106, '🅹'], [107, '🅺'], [108, '🅻'], [109, '🅼'], [110, '🅽'], [111, '🅾'], [112, '🅿'], 
-		[113, '🆀'], [114, '🆁'], [115, '🆂'], [116, '🆃'], [117, '🆄'], [118, '🆅'], [119, '🆆'], [120, '🆇'], 
+		[97, '🅰'], [98, '🅱'], [99, '🅲'], [100, '🅳'], [101, '🅴'], [102, '🅵'], [103, '🅶'], [104, '🅷'],
+		[105, '🅸'], [106, '🅹'], [107, '🅺'], [108, '🅻'], [109, '🅼'], [110, '🅽'], [111, '🅾'], [112, '🅿'],
+		[113, '🆀'], [114, '🆁'], [115, '🆂'], [116, '🆃'], [117, '🆄'], [118, '🆅'], [119, '🆆'], [120, '🆇'],
 		[121, '🆈'], [122, '🆉']
+	]),
+
+	// Fraktur / Old English - A-Z (65-90), a-z (97-122)
+	fraktur: new Map([
+		// A-Z
+		[65, '𝔄'], [66, '𝔅'], [67, 'ℭ'], [68, '𝔇'], [69, '𝔈'], [70, '𝔉'], [71, '𝔊'], [72, 'ℌ'],
+		[73, 'ℑ'], [74, '𝔍'], [75, '𝔎'], [76, '𝔏'], [77, '𝔐'], [78, '𝔑'], [79, '𝔒'], [80, '𝔓'],
+		[81, '𝔔'], [82, 'ℜ'], [83, '𝔖'], [84, '𝔗'], [85, '𝔘'], [86, '𝔙'], [87, '𝔚'], [88, '𝔛'],
+		[89, '𝔜'], [90, 'ℨ'],
+		// a-z
+		[97, '𝔞'], [98, '𝔟'], [99, '𝔠'], [100, '𝔡'], [101, '𝔢'], [102, '𝔣'], [103, '𝔤'], [104, '𝔥'],
+		[105, '𝔦'], [106, '𝔧'], [107, '𝔨'], [108, '𝔩'], [109, '𝔪'], [110, '𝔫'], [111, '𝔬'], [112, '𝔭'],
+		[113, '𝔮'], [114, '𝔯'], [115, '𝔰'], [116, '𝔱'], [117, '𝔲'], [118, '𝔳'], [119, '𝔴'], [120, '𝔵'],
+		[121, '𝔶'], [122, '𝔷']
+	]),
+
+	// Small Caps - A-Z (65-90), a-z (97-122)
+	smallcaps: new Map([
+		// A-Z (mantener mayúsculas normales)
+		[65, 'A'], [66, 'B'], [67, 'C'], [68, 'D'], [69, 'E'], [70, 'F'], [71, 'G'], [72, 'H'],
+		[73, 'I'], [74, 'J'], [75, 'K'], [76, 'L'], [77, 'M'], [78, 'N'], [79, 'O'], [80, 'P'],
+		[81, 'Q'], [82, 'R'], [83, 'S'], [84, 'T'], [85, 'U'], [86, 'V'], [87, 'W'], [88, 'X'],
+		[89, 'Y'], [90, 'Z'],
+		// a-z (small caps Unicode)
+		[97, 'ᴀ'], [98, 'ʙ'], [99, 'ᴄ'], [100, 'ᴅ'], [101, 'ᴇ'], [102, 'ꜰ'], [103, 'ɢ'], [104, 'ʜ'],
+		[105, 'ɪ'], [106, 'ᴊ'], [107, 'ᴋ'], [108, 'ʟ'], [109, 'ᴍ'], [110, 'ɴ'], [111, 'ᴏ'], [112, 'ᴘ'],
+		[113, 'ǫ'], [114, 'ʀ'], [115, 'ꜱ'], [116, 'ᴛ'], [117, 'ᴜ'], [118, 'ᴠ'], [119, 'ᴡ'], [120, 'x'],
+		[121, 'ʏ'], [122, 'ᴢ']
+	]),
+
+	// Superscript - A-Z (65-90), a-z (97-122), 0-9 (48-57) - cobertura parcial
+	superscript: new Map([
+		// A-Z (cobertura parcial en Unicode)
+		[65, 'ᴬ'], [66, 'ᴮ'], [67, 'ᶜ'], [68, 'ᴰ'], [69, 'ᴱ'], [70, 'ᶠ'], [71, 'ᴳ'], [72, 'ᴴ'],
+		[73, 'ᴵ'], [74, 'ᴶ'], [75, 'ᴷ'], [76, 'ᴸ'], [77, 'ᴹ'], [78, 'ᴺ'], [79, 'ᴼ'], [80, 'ᴾ'],
+		[81, 'Q'], [82, 'ᴿ'], [83, 'ˢ'], [84, 'ᵀ'], [85, 'ᵁ'], [86, 'ⱽ'], [87, 'ᵂ'], [88, 'ˣ'],
+		[89, 'ʸ'], [90, 'ᶻ'],
+		// a-z
+		[97, 'ᵃ'], [98, 'ᵇ'], [99, 'ᶜ'], [100, 'ᵈ'], [101, 'ᵉ'], [102, 'ᶠ'], [103, 'ᵍ'], [104, 'ʰ'],
+		[105, 'ⁱ'], [106, 'ʲ'], [107, 'ᵏ'], [108, 'ˡ'], [109, 'ᵐ'], [110, 'ⁿ'], [111, 'ᵒ'], [112, 'ᵖ'],
+		[113, 'q'], [114, 'ʳ'], [115, 'ˢ'], [116, 'ᵗ'], [117, 'ᵘ'], [118, 'ᵛ'], [119, 'ʷ'], [120, 'ˣ'],
+		[121, 'ʸ'], [122, 'ᶻ'],
+		// 0-9
+		[48, '⁰'], [49, '¹'], [50, '²'], [51, '³'], [52, '⁴'], [53, '⁵'], [54, '⁶'], [55, '⁷'],
+		[56, '⁸'], [57, '⁹']
+	]),
+
+	// Inverted / Upside Down - A-Z (65-90), a-z (97-122)
+	inverted: new Map([
+		// A-Z
+		[65, '∀'], [66, 'ᙠ'], [67, 'Ɔ'], [68, 'ᗡ'], [69, 'Ǝ'], [70, 'Ⅎ'], [71, '⅁'], [72, 'H'],
+		[73, 'I'], [74, 'ſ'], [75, 'ʞ'], [76, '˥'], [77, 'W'], [78, 'N'], [79, 'O'], [80, 'Ԁ'],
+		[81, 'Ὸ'], [82, 'ᴚ'], [83, 'S'], [84, '⊥'], [85, '∩'], [86, 'Λ'], [87, 'M'], [88, 'X'],
+		[89, '⅄'], [90, 'Z'],
+		// a-z
+		[97, 'ɐ'], [98, 'q'], [99, 'ɔ'], [100, 'p'], [101, 'ǝ'], [102, 'ɟ'], [103, 'ƃ'], [104, 'ɥ'],
+		[105, 'ᴉ'], [106, 'ɾ'], [107, 'ʞ'], [108, 'l'], [109, 'ɯ'], [110, 'u'], [111, 'o'], [112, 'd'],
+		[113, 'b'], [114, 'ɹ'], [115, 's'], [116, 'ʇ'], [117, 'n'], [118, 'ʌ'], [119, 'ʍ'], [120, 'x'],
+		[121, 'ʎ'], [122, 'z']
 	])
 };
 
@@ -198,16 +257,30 @@ function convert(input, map) {
 		.map((ch) => {
 			// No tocar hashtags y menciones
 			if (ch === '#' || ch === '@') return ch;
-			
+
 			// Buscar por código de carácter
 			const charCode = ch.charCodeAt(0);
 			const mapped = map.get(charCode);
 			if (mapped) return mapped;
-			
+
 			// Caracteres especiales españoles - mantener sin cambio
 			if ('ñÑáéíóúüÁÉÍÓÚÜ¿¡'.includes(ch)) return ch;
-			
+
 			return ch;
+		})
+		.join('');
+}
+
+// Función especial para estilos con caracteres combinantes (strikethrough, underline)
+function convertWithCombining(input, combiningChar) {
+	return [...input]
+		.map((ch) => {
+			// No tocar hashtags y menciones
+			if (ch === '#' || ch === '@') return ch;
+			// Espacios sin combinar
+			if (ch === ' ' || ch === '\n' || ch === '\t') return ch;
+			// Añadir carácter combinante después de cada carácter
+			return ch + combiningChar;
 		})
 		.join('');
 }
@@ -251,29 +324,47 @@ function applyStyleToSelection(style) {
 	const start = textarea.selectionStart;
 	const end = textarea.selectionEnd;
 	const text = textarea.value;
-	
+
 	// Si no hay selección, aplicar a todo el texto
 	if (start === end) {
 		saveState();
-		const converted = style ? convert(text, MAPS[style]) : toPlain(text);
+		let converted;
+		if (!style) {
+			converted = toPlain(text);
+		} else if (style === 'strikethrough') {
+			converted = convertWithCombining(text, '\u0336');
+		} else if (style === 'underline') {
+			converted = convertWithCombining(text, '\u0332');
+		} else {
+			converted = convert(text, MAPS[style]);
+		}
 		textarea.value = converted;
 		toast(`Estilo ${getStyleName(style)} aplicado a todo el texto`);
 		return;
 	}
-	
+
 	// Aplicar estilo solo al texto seleccionado
 	saveState();
 	const selectedText = text.substring(start, end);
-	const convertedText = style ? convert(selectedText, MAPS[style]) : toPlain(selectedText);
-	
+	let convertedText;
+	if (!style) {
+		convertedText = toPlain(selectedText);
+	} else if (style === 'strikethrough') {
+		convertedText = convertWithCombining(selectedText, '\u0336');
+	} else if (style === 'underline') {
+		convertedText = convertWithCombining(selectedText, '\u0332');
+	} else {
+		convertedText = convert(selectedText, MAPS[style]);
+	}
+
 	const newText = text.substring(0, start) + convertedText + text.substring(end);
 	textarea.value = newText;
-	
+
 	// Mantener la selección en el texto convertido
 	const newEnd = start + convertedText.length;
 	textarea.setSelectionRange(start, newEnd);
 	textarea.focus();
-	
+
 	toast(`Estilo ${getStyleName(style)} aplicado a la selección`);
 }
 
@@ -291,7 +382,13 @@ function getStyleName(style) {
 		sansbold: 'sans negrita',
 		sansitalic: 'sans cursiva',
 		circled: 'círculos',
-		squared: 'cuadrados'
+		squared: 'cuadrados',
+		fraktur: 'gótico',
+		strikethrough: 'tachado',
+		underline: 'subrayado',
+		smallcaps: 'versalitas',
+		superscript: 'superíndice',
+		inverted: 'invertido'
 	};
 	return names[style] || 'texto plano';
 }

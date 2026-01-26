@@ -1,20 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://fancytext.com.es/</loc>
-    <lastmod>2025-10-16</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2026-01-26</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-    <image:image>
-      <image:loc>https://fancytext.com.es/icons/512.png</image:loc>
-      <image:title>FancyText - Generador de Negritas y Cursivas</image:title>
-    </image:image>
   </url>
   <url>
-    <loc>https://fancytext.com.es/share.html</loc>
-    <lastmod>2025-10-16</lastmod>
+    <loc>https://fancytext.com.es/letras-bonitas-whatsapp/</loc>
     <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/cursiva-instagram/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/letras-aesthetic/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/fuentes-tiktok/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/letras-goticas/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/texto-tachado/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/letras-circulo/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://fancytext.com.es/letras-cuadrado/</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>
