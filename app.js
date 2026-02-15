@@ -516,122 +516,41 @@ function handleServiceWorkerUpdates() {
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.addEventListener('message', (event) => {
 			const { type, version, url } = event.data;
-			
+
 			if (type === 'SW_UPDATED') {
 				console.log('[App] Service Worker actualizado a versión:', version);
-				showUpdateNotification();
+				reloadApp();
 			}
-			
+
 			if (type === 'CONTENT_UPDATED') {
 				console.log('[App] Contenido actualizado:', url);
-				showUpdateNotification();
+				reloadApp();
 			}
 		});
-		
+
 		// Comprobar actualizaciones al cargar
 		navigator.serviceWorker.ready.then((registration) => {
 			if (registration.waiting) {
-				showUpdateNotification();
+				reloadApp();
 			}
 		});
 	}
 }
 
-function showUpdateNotification() {
-	// Evitar mostrar múltiples notificaciones
-	if (document.querySelector('.update-notification')) {
-		return;
-	}
-	
-	const notification = document.createElement('div');
-	notification.className = 'update-notification';
-	notification.innerHTML = `
-		<div class="update-content">
-			<span>Nueva versión disponible</span>
-			<button id="update-app">Actualizar</button>
-			<button id="dismiss-update">×</button>
-		</div>
-	`;
-	
-	document.body.appendChild(notification);
-	
-	// Mostrar la notificación
-	setTimeout(() => notification.classList.add('show'), 100);
-	
-	// Event listeners
-	document.getElementById('update-app')?.addEventListener('click', () => {
-		updateApp();
-	});
-	
-	document.getElementById('dismiss-update')?.addEventListener('click', () => {
-		dismissUpdateNotification();
-	});
-	
-	// Auto-dismiss después de 10 segundos
-	setTimeout(() => {
-		if (document.querySelector('.update-notification')) {
-			dismissUpdateNotification();
-		}
-	}, 10000);
-}
-
-function updateApp() {
+function reloadApp() {
 	if ('serviceWorker' in navigator) {
 		navigator.serviceWorker.ready.then((registration) => {
 			if (registration.waiting) {
 				// Activar el service worker que está esperando
 				registration.waiting.postMessage({ type: 'SKIP_WAITING' });
 			}
-			// Recargar la página para aplicar los cambios
+			// Recargar la página automáticamente para aplicar los cambios
 			window.location.reload();
 		});
-	}
-}
-
-function dismissUpdateNotification() {
-	const notification = document.querySelector('.update-notification');
-	if (notification) {
-		notification.classList.remove('show');
-		setTimeout(() => notification.remove(), 300);
 	}
 }
 
 window.addEventListener('DOMContentLoaded', () => {
 	bindUI();
 	handleServiceWorkerUpdates();
-});
-// Mobile navigation toggle
-document.addEventListener('DOMContentLoaded', () => {
-	const navToggle = document.querySelector('.nav-toggle');
-	const navMenu = document.querySelector('.nav-menu');
-	
-	if (navToggle && navMenu) {
-		navToggle.addEventListener('click', () => {
-			navMenu.classList.toggle('active');
-			const isActive = navMenu.classList.contains('active');
-			navToggle.setAttribute('aria-expanded', isActive);
-			navToggle.textContent = isActive ? '✕' : '☰';
-		});
-
-		// Close menu when clicking dropdown items on mobile
-		const dropdownLinks = navMenu.querySelectorAll('.dropdown-content a');
-		dropdownLinks.forEach(link => {
-			link.addEventListener('click', () => {
-				if (window.innerWidth <= 768) {
-					navMenu.classList.remove('active');
-					navToggle.setAttribute('aria-expanded', 'false');
-					navToggle.textContent = '☰';
-				}
-			});
-		});
-
-		// Close menu when clicking outside
-		document.addEventListener('click', (e) => {
-			if (!e.target.closest('.main-nav') && navMenu.classList.contains('active')) {
-				navMenu.classList.remove('active');
-				navToggle.setAttribute('aria-expanded', 'false');
-				navToggle.textContent = '☰';
-			}
-		});
-	}
 });
