@@ -50,6 +50,12 @@
 			"short_name": "Símbolos",
 			"url": "/simbolos-aesthetic/",
 			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
+		},
+		{
+			"name": "Generador QR",
+			"short_name": "QR",
+			"url": "/generador-qr/",
+			"icons": [{"src": "/icons/192.png", "sizes": "192x192"}]
 		}
 	],
 	"share_target": {

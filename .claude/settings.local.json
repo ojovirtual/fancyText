@@ -5,7 +5,8 @@
       "Bash(do echo \"Actualizando $file...\")",
       "Bash(done)",
       "Bash(for file in \"c:\\AutomIA\\fancyText\\index.html\" \"c:\\AutomIA\\fancyText\\letras-goticas\\index.html\" \"c:\\AutomIA\\fancyText\\texto-tachado\\index.html\" \"c:\\AutomIA\\fancyText\\letras-circulo\\index.html\" \"c:\\AutomIA\\fancyText\\letras-cuadrado\\index.html\" \"c:\\AutomIA\\fancyText\\contador-caracteres\\index.html\" \"c:\\AutomIA\\fancyText\\espacio-invisible\\index.html\" \"c:\\AutomIA\\fancyText\\invertir-texto\\index.html\")",
-      "Bash(do echo \"Procesando: $file\")"
+      "Bash(do echo \"Procesando: $file\")",
+      "Bash(move:*)"
     ],
     "deny": [],
     "ask": []

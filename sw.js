@@ -1,5 +1,5 @@
 const CACHE_NAME = 'fancy-v5';
-const CACHE_VERSION = '5.5.0';
+const CACHE_VERSION = '5.6.0';
 const urlsToCache = [
 	'/',
 	'/index.html',
@@ -24,7 +24,8 @@ const urlsToCache = [
 	'/espacio-invisible/',
 	'/invertir-texto/',
 	'/separadores-instagram/',
-	'/simbolos-aesthetic/'
+	'/simbolos-aesthetic/',
+	'/generador-qr/'
 ];
 
 // Variable para controlar si hay actualizaciones disponibles

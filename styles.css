@@ -882,6 +882,59 @@ button:active, .link:active {
   margin-bottom: 20px;
 }
 
+/* ============================================
+   QR Generator Styles
+   ============================================ */
+
+#qrcode {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 280px;
+  padding: 24px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  margin: 24px 0;
+}
+
+#qrcode canvas,
+#qrcode img {
+  max-width: 100%;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+/* Select elements styling */
+select {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--textarea-bg);
+  color: var(--fg);
+  border: 1px solid var(--textarea-border);
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dark select:focus {
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+select option {
+  background: var(--textarea-bg);
+  color: var(--fg);
+}
+
 @media (max-width: 640px) {
   .stats-grid {
     grid-template-columns: repeat(2, 1fr);
