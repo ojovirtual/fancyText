@@ -1281,3 +1281,48 @@ select option {
     flex-direction: column;
   }
 }
+
+/* Sponsored Banner */
+.sponsored-banner-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 16px 10px;
+}
+
+.sponsored-banner-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 4px;
+}
+
+.sponsored-banner-section a {
+  display: block;
+  line-height: 0;
+  border: 1px solid #9ca3af;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.banner-desktop {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+.banner-mobile {
+  display: none;
+  max-width: 100%;
+  height: auto;
+}
+
+@media (max-width: 768px) {
+  .banner-desktop {
+    display: none;
+  }
+  .banner-mobile {
+    display: block;
+  }
+}

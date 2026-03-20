@@ -1,0 +1,26 @@
+[
+  {
+    "enabled": true,
+    "desktopImage": "/banner/banner_chatbot_728x90.webp",
+    "mobileImage": "/banner/banner_chatbot_320x50.webp",
+    "linkUrl": "https://www.automia.es/servicios/chatbots.html",
+    "altText": "Espacio Patrocinado - AutomIA Chatbots",
+    "openInNewTab": true
+  },
+  {
+    "enabled": true,
+    "desktopImage": "/banner/valionz_728x90.webp",
+    "mobileImage": "/banner/valionz_320x50.gif",
+    "linkUrl": "https://valionz.com",
+    "altText": "Espacio Patrocinado - Valionz",
+    "openInNewTab": true
+  },
+  {
+    "enabled": true,
+    "desktopImage": "/banner/banner_automia_728x90.webp",
+    "mobileImage": "/banner/banner_automia_320x50.webp",
+    "linkUrl": "https://automia.es",
+    "altText": "Espacio Patrocinado - AutomIA",
+    "openInNewTab": true
+  }
+]
