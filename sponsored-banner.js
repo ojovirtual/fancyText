@@ -17,7 +17,9 @@
       label.textContent = 'Espacio Patrocinado';
 
       var link = document.createElement('a');
-      link.href = banner.linkUrl;
+      var url = new URL(banner.linkUrl);
+      url.searchParams.set('utm_source', 'fancytext_com_es');
+      link.href = url.toString();
       if (banner.openInNewTab) {
         link.target = '_blank';
         link.rel = 'noopener noreferrer';
