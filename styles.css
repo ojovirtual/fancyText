@@ -117,6 +117,57 @@ textarea:focus {
   box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
 }
 
+input[type="text"],
+input[type="tel"],
+input[type="email"],
+input[type="url"] {
+  width: 100%;
+  background: var(--textarea-bg);
+  color: var(--fg);
+  border: 1px solid var(--textarea-border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-family: inherit;
+  font-size: 14px;
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.dark input[type="text"]:focus,
+.dark input[type="tel"]:focus,
+.dark input[type="email"]:focus,
+.dark input[type="url"]:focus {
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
+}
+
+.vcard-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 16px;
+}
+
+.vcard-grid label {
+  margin: 12px 0 6px;
+}
+
+.vcard-full {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 640px) {
+  .vcard-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 .style-toolbar {
   margin: 16px 0;
   padding: 16px;

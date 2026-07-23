@@ -234,9 +234,67 @@
   <main>
     <!-- Panel interactivo -->
     <section class="panel">
-      <!-- Input de texto -->
-      <label for="text-input">Texto o URL para el código QR</label>
-      <textarea id="text-input" placeholder="Escribe o pega tu texto aquí" rows="3" oninput="generateQRCode()"></textarea>
+      <!-- Selector de tipo de QR -->
+      <label for="qr-type">Tipo de código QR</label>
+      <select id="qr-type" onchange="toggleQRType()">
+        <option value="text" selected>🔗 Texto o URL</option>
+        <option value="vcard">👤 Tarjeta de contacto (vCard)</option>
+      </select>
+
+      <!-- Modo Texto/URL -->
+      <div id="text-mode">
+        <label for="text-input">Texto o URL para el código QR</label>
+        <textarea id="text-input" placeholder="Escribe o pega tu texto aquí" rows="3"></textarea>
+      </div>
+
+      <!-- Modo vCard -->
+      <div id="vcard-mode" style="display:none;">
+        <div class="vcard-grid">
+          <div>
+            <label for="vc-name">Nombre *</label>
+            <input type="text" id="vc-name" placeholder="Juan">
+          </div>
+          <div>
+            <label for="vc-lastname">Apellidos</label>
+            <input type="text" id="vc-lastname" placeholder="Pérez García">
+          </div>
+          <div>
+            <label for="vc-phone">Teléfono móvil</label>
+            <input type="tel" id="vc-phone" placeholder="+34 600 000 000">
+          </div>
+          <div>
+            <label for="vc-phone-work">Teléfono trabajo</label>
+            <input type="tel" id="vc-phone-work" placeholder="+34 900 000 000">
+          </div>
+          <div>
+            <label for="vc-email">Email</label>
+            <input type="email" id="vc-email" placeholder="juan@ejemplo.com">
+          </div>
+          <div>
+            <label for="vc-org">Empresa</label>
+            <input type="text" id="vc-org" placeholder="Mi Empresa">
+          </div>
+          <div>
+            <label for="vc-title">Cargo</label>
+            <input type="text" id="vc-title" placeholder="Director">
+          </div>
+          <div>
+            <label for="vc-website">Web</label>
+            <input type="url" id="vc-website" placeholder="https://miweb.com">
+          </div>
+          <div class="vcard-full">
+            <label for="vc-address">Dirección</label>
+            <input type="text" id="vc-address" placeholder="Calle Mayor 1, Madrid">
+          </div>
+        </div>
+      </div>
+
+      <!-- Botón para generar el QR -->
+      <div class="actions" style="margin-top:16px;">
+        <button onclick="generateQRCode()" class="plain-btn" style="flex:1;">
+          ⚡ Generar código QR
+        </button>
+      </div>
 
       <!-- Contenedor del QR generado -->
       <div id="qrcode"></div>
@@ -352,25 +410,79 @@
   <script>
     let qr;
 
+    function toggleQRType() {
+      const type = document.getElementById('qr-type').value;
+      document.getElementById('text-mode').style.display = type === 'vcard' ? 'none' : 'block';
+      document.getElementById('vcard-mode').style.display = type === 'vcard' ? 'block' : 'none';
+    }
+
+    function buildVCard() {
+      const nombre = document.getElementById('vc-name').value.trim();
+      const apellidos = document.getElementById('vc-lastname').value.trim();
+      const telefono = document.getElementById('vc-phone').value.trim();
+      const telefonoTrabajo = document.getElementById('vc-phone-work').value.trim();
+      const email = document.getElementById('vc-email').value.trim();
+      const empresa = document.getElementById('vc-org').value.trim();
+      const cargo = document.getElementById('vc-title').value.trim();
+      const web = document.getElementById('vc-website').value.trim();
+      const direccion = document.getElementById('vc-address').value.trim();
+
+      if (!nombre && !apellidos) {
+        return '';
+      }
+
+      const nombreCompleto = [nombre, apellidos].filter(Boolean).join(' ');
+
+      let vcard = 'BEGIN:VCARD\nVERSION:3.0\n';
+      vcard += `N:${apellidos};${nombre};;;\n`;
+      vcard += `FN:${nombreCompleto}\n`;
+      if (empresa) vcard += `ORG:${empresa}\n`;
+      if (cargo) vcard += `TITLE:${cargo}\n`;
+      if (telefono) vcard += `TEL;TYPE=CELL:${telefono}\n`;
+      if (telefonoTrabajo) vcard += `TEL;TYPE=WORK:${telefonoTrabajo}\n`;
+      if (email) vcard += `EMAIL:${email}\n`;
+      if (web) vcard += `URL:${web}\n`;
+      if (direccion) vcard += `ADR;TYPE=HOME:;;${direccion};;;;\n`;
+      vcard += 'END:VCARD';
+
+      return vcard;
+    }
+
     function generateQRCode() {
-      const texto = document.getElementById('text-input').value;
+      const type = document.getElementById('qr-type').value;
       const resolution = parseInt(document.getElementById('resolution').value);
       const qrContainer = document.getElementById('qrcode');
 
       qrContainer.innerHTML = "";
 
+      let texto;
+      if (type === 'vcard') {
+        texto = buildVCard();
+        if (!texto) {
+          alert('Introduce al menos el nombre para generar la tarjeta de contacto.');
+          return;
+        }
+      } else {
+        texto = document.getElementById('text-input').value;
+      }
+
       if (texto.trim() === "") {
         return;
       }
 
-      qr = new QRCode(qrContainer, {
-        text: texto,
-        width: resolution,
-        height: resolution,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.M  // Corrección media por defecto
-      });
+      try {
+        qr = new QRCode(qrContainer, {
+          text: texto,
+          width: resolution,
+          height: resolution,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.M  // Corrección media por defecto
+        });
+      } catch (e) {
+        qrContainer.innerHTML = "";
+        alert('El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.');
+      }
     }
 
     function detectModuleSize(canvas) {
