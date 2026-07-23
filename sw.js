@@ -7,6 +7,7 @@ const urlsToCache = [
 	'/styles.css',
 	'/app.js',
 	'/tools.js',
+	'/qrcode.js',
 	'/manifest.webmanifest',
 	'/sitemap.xml',
 	'/robots.txt',

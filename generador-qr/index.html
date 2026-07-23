@@ -87,8 +87,9 @@
   }
   </script>
 
-  <!-- Biblioteca QRCode.js desde CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <!-- Biblioteca QRCode.js (vendorizada localmente: el build minificado del CDN oficial
+       tiene un bug de recuento de bytes que corrompe el QR con texto con tildes/ñ) -->
+  <script src="/qrcode.js"></script>
 
   <!-- Alpine.js -->
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
