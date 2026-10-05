@@ -1,5 +1,5 @@
-const CACHE_NAME = 'fancy-v5';
-const CACHE_VERSION = '5.8.0';
+const CACHE_NAME = 'fancy-v6';
+const CACHE_VERSION = '5.8.1';
 const urlsToCache = [
 	'/',
 	'/index.html',
