@@ -1,0 +1,476 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+
+  <title>Generador QR WiFi Gratis ✨ Comparte tu Red sin Contraseña | FancyText</title>
+  <meta name="description" content="📶 Crea un código QR para tu WiFi gratis: tus invitados se conectan escaneándolo, sin escribir la contraseña. Descarga PNG, SVG o un cartel listo para imprimir. Sin registro."/>
+  <meta name="keywords" content="qr wifi, codigo qr wifi, generador qr wifi, crear qr wifi, compartir wifi con qr, qr contraseña wifi, cartel wifi qr, qr wifi gratis"/>
+  <meta name="author" content="AutomIA">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="es">
+
+  <link rel="canonical" href="https://fancytext.com.es/qr-wifi/"/>
+  <!-- Redes sociales (generado por update-nav.js) -->
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="FancyText">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:url" content="https://fancytext.com.es/qr-wifi/">
+  <meta property="og:title" content="Generador QR WiFi Gratis ✨ Comparte tu Red sin Contraseña">
+  <meta property="og:description" content="📶 Crea un código QR para tu WiFi gratis: tus invitados se conectan escaneándolo, sin escribir la contraseña. Descarga PNG, SVG o un cartel listo para imprimir. Sin registro.">
+  <meta property="og:image" content="https://fancytext.com.es/og/qr-wifi.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="Generador QR WiFi Gratis ✨ Comparte tu Red sin Contraseña">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- /Redes sociales -->
+  <link rel="manifest" href="/manifest.webmanifest"/>
+  <meta name="theme-color" content="#111827"/>
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="QR WiFi">
+  <link rel="stylesheet" href="/styles.css?v=5.10.0"/>
+
+  <!-- Biblioteca qrcode-generator desde CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+  <!-- Alpine.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js"></script>
+  <!-- Datos estructurados (generado por update-nav.js) -->
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Generador QR WiFi Gratis ✨ Comparte tu Red sin Contraseña","description":"📶 Crea un código QR para tu WiFi gratis: tus invitados se conectan escaneándolo, sin escribir la contraseña. Descarga PNG, SVG o un cartel listo para imprimir. Sin registro.","url":"https://fancytext.com.es/qr-wifi/","applicationCategory":"UtilitiesApplication","operatingSystem":"Web","inLanguage":"es","offers":{"@type":"Offer","price":"0","priceCurrency":"EUR"}}</script>
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Inicio","item":"https://fancytext.com.es/"},{"@type":"ListItem","position":2,"name":"QR WiFi","item":"https://fancytext.com.es/qr-wifi/"}]}</script>
+  <!-- /Datos estructurados -->
+</head>
+<body>
+  <nav class="main-nav" x-data="{ mobileOpen: false }">
+  <div class="nav-container">
+    <div class="nav-header">
+      <a href="/" class="home-link" aria-label="Inicio">
+        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+        <span class="home-text">FancyText</span>
+      </a>
+      <button
+        @click="mobileOpen = !mobileOpen"
+        class="nav-toggle"
+        :aria-expanded="mobileOpen"
+        aria-label="Menú">
+        <svg x-show="!mobileOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        <svg x-show="mobileOpen" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+      </button>
+    </div>
+
+    <div class="nav-menu" :class="{ 'active': mobileOpen }">
+      <!-- Generadores Dropdown -->
+      <div class="nav-dropdown" x-data="{ open: false }" @click.away="open = false">
+        <button
+          @click="open = !open"
+          :aria-expanded="open"
+          class="nav-dropdown-btn">
+          <span>✨ Generadores</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" :class="{ 'rotate-180': open }"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div
+          class="dropdown-content"
+          x-show="open"
+          x-transition:enter="dropdown-enter"
+          x-transition:enter-start="dropdown-enter-start"
+          x-transition:enter-end="dropdown-enter-end"
+          x-transition:leave="dropdown-leave"
+          x-transition:leave-start="dropdown-leave-start"
+          x-transition:leave-end="dropdown-leave-end"
+          @click="open = false; mobileOpen = false">
+          <a href="/letras-bonitas-whatsapp/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            Letras para WhatsApp
+          </a>
+          <a href="/cursiva-instagram/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+            Cursiva Instagram
+          </a>
+          <a href="/letras-aesthetic/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            Letras Aesthetic
+          </a>
+          <a href="/fuentes-tiktok/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect></svg>
+            Fuentes TikTok
+          </a>
+          <a href="/letras-goticas/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+            Letras Góticas
+          </a>
+          <a href="/letras-vikingas/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            Letras Vikingas
+          </a>
+          <a href="/texto-tachado/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="15"></line><line x1="4" y1="15" x2="20" y2="9"></line><path d="M12 3v18"></path></svg>
+            Texto Tachado
+          </a>
+          <a href="/letras-circulo/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle></svg>
+            Letras en Círculo
+          </a>
+          <a href="/letras-cuadrado/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+            Letras en Cuadrado
+          </a>
+        </div>
+      </div>
+
+      <!-- Herramientas Dropdown -->
+      <div class="nav-dropdown" x-data="{ open: false }" @click.away="open = false">
+        <button
+          @click="open = !open"
+          :aria-expanded="open"
+          class="nav-dropdown-btn">
+          <span>🛠️ Herramientas</span>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" :class="{ 'rotate-180': open }"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div
+          class="dropdown-content"
+          x-show="open"
+          x-transition:enter="dropdown-enter"
+          x-transition:enter-start="dropdown-enter-start"
+          x-transition:enter-end="dropdown-enter-end"
+          x-transition:leave="dropdown-leave"
+          x-transition:leave-start="dropdown-leave-start"
+          x-transition:leave-end="dropdown-leave-end"
+          @click="open = false; mobileOpen = false">
+          <a href="/contador-caracteres/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="10" y1="3" x2="14" y2="21"></line><line x1="12" y1="8" x2="20" y2="8"></line><line x1="8" y1="16" x2="16" y2="16"></line></svg>
+            Contador de Caracteres
+          </a>
+          <a href="/espacio-invisible/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line></svg>
+            Espacio Invisible
+          </a>
+          <a href="/invertir-texto/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="17 1 21 5 17 9"></polyline><path d="M3 11V9a4 4 0 0 1 4-4h14"></path><polyline points="7 23 3 19 7 15"></polyline><path d="M21 13v2a4 4 0 0 1-4 4H3"></path></svg>
+            Invertir Texto
+          </a>
+          <a href="/separadores-instagram/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+            Separadores
+          </a>
+          <a href="/simbolos-aesthetic/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
+            Símbolos Aesthetic
+          </a>
+          <a href="/generador-qr/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            Generador QR
+          </a>
+          <a href="/qr-wifi/" aria-current="page">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M1.42 9a16 16 0 0 1 21.16 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><line x1="12" y1="20" x2="12.01" y2="20"></line></svg>
+            QR WiFi
+          </a>
+          <a href="/qr-whatsapp/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            QR WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+  <!-- Patrocinado -->
+  <div id="sponsored-banner"></div>
+  <script src="/sponsored-banner.js?v=5.10.0"></script>
+
+  <div class="breadcrumbs">
+    <a href="/">Inicio</a> → <a href="/generador-qr/">Generador QR</a> → <span>QR WiFi</span>
+  </div>
+
+  <header>
+    <h1>📶 Generador de Código QR para WiFi</h1>
+    <p>Crea un QR con los datos de tu red: tus invitados se conectan escaneándolo con la cámara, sin teclear la contraseña. Ideal para casa, bares, oficinas y alojamientos.</p>
+  </header>
+
+  <main>
+    <section class="panel">
+      <label for="wifi-ssid">Nombre de la red (SSID) *</label>
+      <input type="text" id="wifi-ssid" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="MiCasa_WiFi" aria-describedby="wifi-ssid-feedback">
+      <p id="wifi-ssid-feedback" class="field-feedback" aria-live="polite"></p>
+
+      <label for="wifi-security">Tipo de seguridad</label>
+      <select id="wifi-security" onchange="toggleSecurity()">
+        <option value="WPA" selected>🔒 WPA / WPA2 / WPA3 (la más habitual)</option>
+        <option value="WEP">🔓 WEP (routers antiguos)</option>
+        <option value="nopass">🌐 Red abierta, sin contraseña</option>
+      </select>
+
+      <div id="wifi-password-group">
+        <label for="wifi-password">Contraseña *</label>
+        <div class="password-field">
+          <input type="password" id="wifi-password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="Contraseña de la WiFi" aria-describedby="wifi-password-feedback">
+          <button type="button" id="toggle-password" onclick="togglePasswordVisibility()" aria-label="Mostrar contraseña">👁️ Ver</button>
+        </div>
+        <p id="wifi-password-feedback" class="field-feedback" aria-live="polite"></p>
+      </div>
+
+      <label class="check-label" style="margin-top:12px;">
+        <input type="checkbox" id="wifi-hidden" onchange="generateQRCode(false)">
+        Red oculta (no aparece en la lista de redes)
+      </label>
+
+      <p class="hint">🔒 El QR se genera en tu navegador: la contraseña nunca sale de tu dispositivo.</p>
+
+      <div class="actions text-actions">
+        <button onclick="generateQRCode(true)" class="plain-btn">⚡ Generar QR de WiFi</button>
+      </div>
+      <p id="qr-message" class="field-feedback is-error" role="alert"></p>
+
+      <!-- Contenedor del QR generado -->
+      <div id="qrcode" data-filename="qr-wifi"></div>
+
+      <label for="resolution">Tamaño del código QR</label>
+      <select id="resolution" onchange="generateQRCode(false)">
+        <option value="256">📱 Pequeño (256x256)</option>
+        <option value="512" selected>📄 Mediano (512x512)</option>
+        <option value="768">🖼️ Grande (768x768)</option>
+        <option value="1024">🎨 XXL (1024x1024)</option>
+      </select>
+
+      <div class="actions text-actions">
+        <button onclick="downloadQR('png')">📥 Descargar PNG</button>
+        <button onclick="downloadQR('svg')">📥 Descargar SVG</button>
+      </div>
+
+      <label class="check-label" style="margin-top:16px;">
+        <input type="checkbox" id="poster-show-password" checked>
+        Mostrar la contraseña en el cartel
+      </label>
+      <div class="actions text-actions">
+        <button onclick="downloadPoster()">🖨️ Descargar cartel para imprimir</button>
+      </div>
+    </section>
+
+    <section class="seo-content">
+      <h2>¿Cómo crear un código QR para tu WiFi?</h2>
+      <ol>
+        <li>Escribe el <strong>nombre de tu red</strong> (SSID) exactamente como aparece en el móvil, respetando mayúsculas.</li>
+        <li>Elige el <strong>tipo de seguridad</strong>: casi todos los routers usan WPA/WPA2/WPA3.</li>
+        <li>Escribe la <strong>contraseña</strong> de la WiFi y pulsa "Generar".</li>
+        <li>Descarga el QR en PNG o SVG, o el <strong>cartel listo para imprimir</strong> con el QR y el nombre de la red.</li>
+      </ol>
+
+      <h3>¿Dónde encuentro el nombre y la contraseña de mi WiFi?</h3>
+      <p>Normalmente vienen en la <strong>pegatina del router</strong> (busca "SSID" y "Clave" o "Password"). Si la cambiaste, en Android puedes verla en <em>Ajustes → Wi-Fi → tu red → Compartir</em>, y en iPhone en <em>Ajustes → Wi-Fi → (i) → Contraseña</em>.</p>
+
+      <h3>¿Funciona en iPhone y Android?</h3>
+      <p>Sí. Basta con abrir la <strong>cámara</strong> y apuntar al código: el iPhone (iOS 11 o posterior) y la mayoría de móviles Android (Android 10 o posterior, o con Google Lens) proponen conectarse a la red automáticamente.</p>
+
+      <h3>Ideas para usar tu QR de WiFi</h3>
+      <ul>
+        <li>🏠 <strong>En casa:</strong> tus invitados se conectan sin dictar la contraseña.</li>
+        <li>☕ <strong>Bares, restaurantes y cafeterías:</strong> pon el cartel en las mesas o en la barra.</li>
+        <li>🛏️ <strong>Alojamientos y pisos turísticos:</strong> inclúyelo en la guía de bienvenida.</li>
+        <li>🏢 <strong>Oficinas y salas de espera:</strong> comparte la red de invitados con clientes y visitas.</li>
+        <li>🎉 <strong>Eventos:</strong> imprime el QR en las invitaciones o en la entrada.</li>
+      </ul>
+
+      <h3>¿Es seguro compartir la WiFi con un QR?</h3>
+      <p>El código contiene la contraseña, así que cualquiera que lo escanee podrá conectarse: compártelo solo donde quieras dar acceso. Si es para clientes o visitas, lo ideal es crear una <strong>red de invitados</strong> en tu router. Nuestro generador funciona en tu navegador: no guardamos ni enviamos tus datos.</p>
+
+      <h3>Otros generadores de QR</h3>
+      <div class="tool-links">
+        <a href="/generador-qr/">🔗 QR de enlace, texto o contacto</a>
+        <a href="/qr-whatsapp/">💬 QR y enlace de WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="footer-links">
+      <section>
+        <h4>Generadores de Texto</h4>
+        <ul>
+          <li><a href="/letras-bonitas-whatsapp/">Letras para WhatsApp</a></li>
+          <li><a href="/cursiva-instagram/">Cursiva Instagram</a></li>
+          <li><a href="/letras-aesthetic/">Letras Aesthetic</a></li>
+          <li><a href="/fuentes-tiktok/">Fuentes TikTok</a></li>
+          <li><a href="/letras-goticas/">Letras Góticas</a></li>
+          <li><a href="/letras-vikingas/">Letras Vikingas</a></li>
+          <li><a href="/texto-tachado/">Texto Tachado</a></li>
+          <li><a href="/letras-circulo/">Letras en Círculo</a></li>
+          <li><a href="/letras-cuadrado/">Letras en Cuadrado</a></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Herramientas</h4>
+        <ul>
+          <li><a href="/contador-caracteres/">Contador de Caracteres</a></li>
+          <li><a href="/espacio-invisible/">Generador Espacio Invisible</a></li>
+          <li><a href="/invertir-texto/">Invertir Texto</a></li>
+          <li><a href="/separadores-instagram/">Separadores Instagram</a></li>
+          <li><a href="/simbolos-aesthetic/">Símbolos Aesthetic</a></li>
+          <li><a href="/generador-qr/">Generador QR</a></li>
+          <li><a href="/qr-wifi/">QR WiFi</a></li>
+          <li><a href="/qr-whatsapp/">Link y QR de WhatsApp</a></li>
+        </ul>
+      </section>
+      <section>
+        <h4>Acerca de</h4>
+        <ul>
+          <li><a href="/">Inicio</a></li>
+          <li><a href="https://automia.es" target="_blank" rel="noopener">AutomIA</a></li>
+        </ul>
+      </section>
+    </div>
+    <div style="text-align: center; padding: 16px;">
+      <small>Hecho con 🧠+🤖 por <a href="https://automia.es" target="_blank" rel="noopener">AutomIA</a></small>
+    </div>
+  </footer>
+
+  <script src="/qr-core.js?v=5.10.0"></script>
+  <script>
+    const SECURITY = () => document.getElementById('wifi-security').value;
+
+    // Caracteres reservados del formato WIFI: (barra invertida ; , : ") se escapan con barra invertida
+    const BACKSLASH = String.fromCharCode(92);
+    const wifiEscape = (value) => value.replace(/[\x5c;,:"]/g, (ch) => BACKSLASH + ch);
+
+    function checkSsid(showError) {
+      const ssid = document.getElementById('wifi-ssid').value.trim();
+      let error = '';
+      if (!ssid) error = 'Escribe el nombre de la red.';
+      else if (new TextEncoder().encode(ssid).length > 32) error = 'El nombre de una red WiFi no puede superar 32 caracteres.';
+
+      if (!error) {
+        setFeedback('wifi-ssid', '', 'success');
+        return ssid;
+      }
+      setFeedback('wifi-ssid', showError ? error : '', showError ? 'error' : null);
+      return null;
+    }
+
+    // Devuelve la contraseña ('' en redes abiertas) o null si no es válida
+    function checkPassword(showError) {
+      if (SECURITY() === 'nopass') return '';
+      const password = document.getElementById('wifi-password').value;
+      const isHex = /^[0-9a-f]+$/i.test(password);
+      let error = '';
+      if (!password) {
+        error = 'Escribe la contraseña de la WiFi.';
+      } else if (SECURITY() === 'WPA' && !((password.length >= 8 && password.length <= 63) || (password.length === 64 && isHex))) {
+        error = 'Una contraseña WPA tiene entre 8 y 63 caracteres.';
+      } else if (SECURITY() === 'WEP' && ![5, 13].includes(password.length) && !(isHex && [10, 26].includes(password.length))) {
+        error = 'Una clave WEP tiene 5 o 13 caracteres (o 10 o 26 hexadecimales).';
+      }
+
+      if (!error) {
+        const spaces = password !== password.trim();
+        setFeedback('wifi-password', spaces ? 'Ojo: la contraseña empieza o termina con un espacio.' : '', 'success');
+        return password;
+      }
+      setFeedback('wifi-password', showError ? error : '', showError ? 'error' : null);
+      return null;
+    }
+
+    bindLiveValidation('wifi-ssid', checkSsid);
+    bindLiveValidation('wifi-password', checkPassword);
+
+    ['wifi-ssid', 'wifi-password'].forEach((id) => {
+      document.getElementById(id).addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') generateQRCode(true);
+      });
+    });
+
+    function toggleSecurity() {
+      document.getElementById('wifi-password-group').style.display = SECURITY() === 'nopass' ? 'none' : 'block';
+      setMessage('');
+      checkPassword(touchedFields.has('wifi-password'));
+      generateQRCode(false);
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById('wifi-password');
+      const button = document.getElementById('toggle-password');
+      const show = input.type === 'password';
+      input.type = show ? 'text' : 'password';
+      button.textContent = show ? '🙈 Ocultar' : '👁️ Ver';
+      button.setAttribute('aria-label', show ? 'Ocultar contraseña' : 'Mostrar contraseña');
+    }
+
+    function buildWifiString(ssid, password) {
+      const type = SECURITY();
+      const hidden = document.getElementById('wifi-hidden').checked;
+      return 'WIFI:T:' + type + ';S:' + wifiEscape(ssid) + ';' +
+        (type !== 'nopass' ? 'P:' + wifiEscape(password) + ';' : '') +
+        (hidden ? 'H:true;' : '') + ';';
+    }
+
+    // userInitiated: true al pulsar "Generar" (muestra errores); false al cambiar opciones (silencioso)
+    function generateQRCode(userInitiated) {
+      clearQR();
+      setMessage('');
+      if (userInitiated) {
+        touchedFields.add('wifi-ssid');
+        touchedFields.add('wifi-password');
+      }
+      const ssid = checkSsid(touchedFields.has('wifi-ssid'));
+      const password = checkPassword(touchedFields.has('wifi-password'));
+      if (ssid === null || password === null) {
+        if (userInitiated) setMessage('Revisa los campos marcados en rojo.');
+        return;
+      }
+      renderQR(buildWifiString(ssid, password));
+    }
+
+    // Texto centrado que se reduce hasta caber en el ancho disponible
+    function fitText(ctx, text, x, y, maxWidth, size, weight, color) {
+      do {
+        ctx.font = weight + ' ' + size + 'px "Segoe UI", system-ui, -apple-system, Roboto, sans-serif';
+        size -= 2;
+      } while (ctx.measureText(text).width > maxWidth && size > 16);
+      ctx.fillStyle = color;
+      ctx.fillText(text, x, y);
+    }
+
+    // Cartel A4 (1240x1754) con el QR, el nombre de la red y la contraseña
+    function downloadPoster() {
+      generateQRCode(true);
+      if (!qr) return;
+      const ssid = document.getElementById('wifi-ssid').value.trim();
+      const password = SECURITY() === 'nopass' ? '' : document.getElementById('wifi-password').value;
+      const showPassword = document.getElementById('poster-show-password').checked;
+
+      const W = 1240, H = 1754, cx = W / 2;
+      const canvas = document.createElement('canvas');
+      canvas.width = W;
+      canvas.height = H;
+      const ctx = canvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, W, H);
+      ctx.fillStyle = '#111827';
+      ctx.fillRect(0, 0, W, 300);
+      ctx.textAlign = 'center';
+
+      fitText(ctx, '📶 WiFi', cx, 175, W - 160, 120, 'bold', '#ffffff');
+      fitText(ctx, 'Escanea el código con la cámara para conectarte', cx, 400, W - 160, 44, '600', '#111827');
+
+      const qrSize = 860;
+      drawQR(ctx, (W - qrSize) / 2, 460, qrSize);
+
+      fitText(ctx, 'Red: ' + ssid, cx, 1450, W - 160, 60, 'bold', '#111827');
+      if (password && showPassword) {
+        fitText(ctx, 'Contraseña: ' + password, cx, 1540, W - 160, 52, '500', '#374151');
+      }
+      fitText(ctx, 'Crea tu QR WiFi gratis en fancytext.com.es/qr-wifi', cx, H - 60, W - 160, 30, '400', '#6b7280');
+
+      triggerDownload(canvas.toDataURL('image/png'), 'cartel-wifi.png');
+    }
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/sw.js');
+    }
+  </script>
+  <script async src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
+</body>
+</html>

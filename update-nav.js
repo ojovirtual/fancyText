@@ -20,7 +20,7 @@ const { execSync } = require('child_process');
 const ROOT = __dirname;
 const SITE = 'https://fancytext.com.es';
 const ALPINE_VERSION = '3.17.4';
-const VERSIONED_ASSETS = ['styles.css', 'app.js', 'tools.js', 'sponsored-banner.js'];
+const VERSIONED_ASSETS = ['styles.css', 'app.js', 'tools.js', 'sponsored-banner.js', 'qr-core.js'];
 
 // Textos para compartir distintos del <title> (por defecto se usan el título y la meta description)
 const SOCIAL_OVERRIDES = {

@@ -126,7 +126,8 @@ textarea:focus {
 input[type="text"],
 input[type="tel"],
 input[type="email"],
-input[type="url"] {
+input[type="url"],
+input[type="password"] {
   width: 100%;
   background: var(--textarea-bg);
   color: var(--fg);
@@ -141,7 +142,8 @@ input[type="url"] {
 input[type="text"]:focus,
 input[type="tel"]:focus,
 input[type="email"]:focus,
-input[type="url"]:focus {
+input[type="url"]:focus,
+input[type="password"]:focus {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
@@ -150,7 +152,8 @@ input[type="url"]:focus {
 .dark input[type="text"]:focus,
 .dark input[type="tel"]:focus,
 .dark input[type="email"]:focus,
-.dark input[type="url"]:focus {
+.dark input[type="url"]:focus,
+.dark input[type="password"]:focus {
   box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.1);
 }
 
@@ -197,6 +200,88 @@ input[type="url"]:focus {
 .tool-links a:hover {
   border-color: var(--accent);
   transform: translateY(-1px);
+}
+
+/* Fila de botones con texto (generadores QR): .actions está pensada para botones redondos de icono */
+.actions.text-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.actions.text-actions button {
+  flex: 1 1 160px;
+  width: auto;
+  height: auto;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 12px;
+}
+
+/* Botón principal (Generar): .actions button lo dejaría gris */
+.actions.text-actions button.plain-btn {
+  background: #f59e0b;
+  color: #ffffff;
+  border-color: #f59e0b;
+}
+
+.actions.text-actions button.plain-btn:hover {
+  background: #d97706;
+  border-color: #d97706;
+}
+
+.check-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.check-label input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+
+.password-field {
+  display: flex;
+  gap: 8px;
+}
+
+.password-field input {
+  flex: 1;
+  min-width: 0;
+}
+
+.password-field button {
+  flex: 0 0 auto;
+}
+
+/* Enlace generado (QR WhatsApp) */
+.result-link {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 12px;
+  padding: 10px 12px;
+  background: var(--textarea-bg);
+  border: 1px solid var(--textarea-border);
+  border-radius: 12px;
+}
+
+.result-link a {
+  flex: 1;
+  min-width: 0;
+  color: var(--accent);
+  overflow-wrap: anywhere;
+  font-size: 14px;
+}
+
+.result-link button {
+  flex: 0 0 auto;
 }
 
 /* Validación de campos */
@@ -1359,6 +1444,7 @@ button:active, .link:active {
 #qrcode img {
   max-width: 100%;
   height: auto;
+  border-radius: 8px;
   image-rendering: pixelated;
   image-rendering: crisp-edges;
 }

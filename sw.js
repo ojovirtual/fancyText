@@ -1,12 +1,13 @@
 const CACHE_NAME = 'fancy-v6';
-const CACHE_VERSION = '5.9.0';
+const CACHE_VERSION = '5.10.0';
 const urlsToCache = [
 	'/',
 	'/index.html',
 	'/share.html',
-	'/styles.css?v=5.9.0',
-	'/app.js?v=5.9.0',
-	'/tools.js?v=5.9.0',
+	'/styles.css?v=5.10.0',
+	'/app.js?v=5.10.0',
+	'/tools.js?v=5.10.0',
+	'/qr-core.js?v=5.10.0',
 	'/manifest.webmanifest',
 	'/sitemap.xml',
 	'/robots.txt',
@@ -26,7 +27,9 @@ const urlsToCache = [
 	'/invertir-texto/',
 	'/separadores-instagram/',
 	'/simbolos-aesthetic/',
-	'/generador-qr/'
+	'/generador-qr/',
+	'/qr-wifi/',
+	'/qr-whatsapp/'
 ];
 
 // Variable para controlar si hay actualizaciones disponibles

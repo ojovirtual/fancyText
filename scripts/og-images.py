@@ -3,8 +3,8 @@ Genera las imágenes Open Graph (1200x630) de cada página en /og/<slug>.png.
 
 Uso: python scripts/og-images.py
 Requiere Pillow y las fuentes de Windows (Cambria Math, Segoe UI, Segoe UI Symbol/Historic).
-El QR de /og/generador-qr.png se lee de scripts/og-qr-matrix.json si existe
-(matriz de módulos del QR de https://fancytext.com.es/generador-qr/).
+Las imágenes de páginas QR usan scripts/og-qr-<slug>.json si existe
+(matriz de módulos del QR con la URL de esa página).
 """
 
 import json
@@ -42,6 +42,8 @@ PAGES = [
     ('separadores-instagram', '✦ ━━━━━━━━ ✦', 'Separadores para Instagram', 'Líneas decorativas para tus posts', {}),
     ('simbolos-aesthetic', '⋆ ° ✩ ♡ ☾ ✧ ❀', 'Símbolos aesthetic', 'Cientos de símbolos para copiar y pegar', {}),
     ('generador-qr', None, 'Generador de códigos QR', 'Gratis, sin límites · PNG y SVG', {'qr': True, 'tags': 'URL · Texto · vCard'}),
+    ('qr-wifi', None, 'Código QR para tu WiFi', 'Conéctate sin escribir la contraseña', {'qr': True, 'tags': 'PNG · SVG · Cartel para imprimir'}),
+    ('qr-whatsapp', None, 'Link y QR de WhatsApp', 'Que te escriban con un toque', {'qr': True, 'tags': 'wa.me · Mensaje predefinido'}),
     ('default', '𝐅𝐚𝐧𝐜𝐲𝐓𝐞𝐱𝐭', 'Letras bonitas para copiar y pegar', 'Negritas, cursivas, símbolos y más', {}),
 ]
 
@@ -99,8 +101,20 @@ def background():
     return img
 
 
-def draw_qr(img, x, y, size):
-    path = os.path.join(ROOT, 'scripts', 'og-qr-matrix.json')
+def wrap(text, f, max_width):
+    lines, line = [], ''
+    for word in text.split():
+        candidate = f'{line} {word}'.strip()
+        if line and f.getlength(candidate) > max_width:
+            lines.append(line)
+            line = word
+        else:
+            line = candidate
+    return lines + [line]
+
+
+def draw_qr(img, x, y, size, slug):
+    path = os.path.join(ROOT, 'scripts', f'og-qr-{slug}.json')
     if os.path.exists(path):
         matrix = json.load(open(path, encoding='utf-8'))
     else:  # patrón decorativo si no hay matriz real
@@ -130,10 +144,9 @@ def render(slug, sample, title, subtitle, opts):
 
     if opts.get('qr'):
         qr_size = 330
-        draw_qr(img, W - 72 - qr_size, 150, qr_size)
-        # Titular en dos líneas para no invadir el QR
-        first, _, rest = title.rpartition(' de ')
-        lines = [first + ' de', rest] if first else [title]
+        draw_qr(img, W - 72 - qr_size, 150, qr_size, slug)
+        # Titular ajustado al ancho libre a la izquierda del QR
+        lines = wrap(title, font('segoeuib.ttf', 64), W - 72 - qr_size - 72 - 40)
         for i, line in enumerate(lines):
             d.text((72, 250 + i * 74), line, font=font('segoeuib.ttf', 64), fill=FG, anchor='ls')
         base = 250 + len(lines) * 74

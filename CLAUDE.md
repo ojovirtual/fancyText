@@ -19,6 +19,8 @@ FancyText is a Progressive Web App (PWA) that converts regular text to styled Un
 - `share.html` - Dedicated page for processing shared text via Web Share Target API
 - `app.js` - Core text conversion logic and UI interactions
 - `sw.js` - Service worker handling caching and Web Share Target requests
+- `qr-core.js` - Shared QR logic for `/generador-qr/`, `/qr-wifi/` and `/qr-whatsapp/` (URL validation, rendering with qrcode-generator in UTF-8 without BOM, PNG/SVG download with quiet zone)
+- `scripts/og-images.py` - Generates the 1200x630 Open Graph images in `og/` (dev only, not shipped)
 - `manifest.webmanifest` - PWA configuration with share target registration
 
 ### Text Conversion System
