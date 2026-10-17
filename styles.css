@@ -12,6 +12,8 @@
   --button-bg: #f3f4f6;
   --button-border: #d1d5db;
   --shadow: rgba(0, 0, 0, 0.1);
+  --error: #dc2626;
+  --success: #047857;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -27,6 +29,8 @@
     --button-bg: #1f2937;
     --button-border: #334155;
     --shadow: rgba(0, 0, 0, 0.35);
+  --error: #f87171;
+  --success: #34d399;
   }
 }
 
@@ -42,6 +46,8 @@
   --button-bg: #1f2937;
   --button-border: #334155;
   --shadow: rgba(0, 0, 0, 0.35);
+  --error: #f87171;
+  --success: #34d399;
 }
 
 * { box-sizing: border-box; }
@@ -166,6 +172,36 @@ input[type="url"]:focus {
   .vcard-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* Validación de campos */
+input.is-invalid,
+input.is-invalid:focus {
+  border-color: var(--error);
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.15);
+}
+
+input.is-valid {
+  border-color: var(--success);
+}
+
+.field-feedback {
+  margin: 6px 0 0;
+  font-size: 13px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.field-feedback:empty {
+  display: none;
+}
+
+.field-feedback.is-error {
+  color: var(--error);
+}
+
+.field-feedback.is-success {
+  color: var(--success);
 }
 
 .style-toolbar {

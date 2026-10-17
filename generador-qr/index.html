@@ -55,6 +55,7 @@
     },
     "featureList": [
       "Códigos QR ilimitados gratis",
+      "Validación automática de URLs",
       "Descarga en PNG y SVG",
       "4 tamaños disponibles (256-1024px)",
       "Corrección de errores media optimizada",
@@ -237,13 +238,21 @@
       <!-- Selector de tipo de QR -->
       <label for="qr-type">Tipo de código QR</label>
       <select id="qr-type" onchange="toggleQRType()">
-        <option value="text" selected>🔗 Texto o URL</option>
+        <option value="url" selected>🔗 Enlace / URL</option>
+        <option value="text">📝 Texto libre</option>
         <option value="vcard">👤 Tarjeta de contacto (vCard)</option>
       </select>
 
-      <!-- Modo Texto/URL -->
-      <div id="text-mode">
-        <label for="text-input">Texto o URL para el código QR</label>
+      <!-- Modo URL -->
+      <div id="url-mode">
+        <label for="url-input">URL de la página web</label>
+        <input type="text" id="url-input" inputmode="url" autocomplete="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="https://tuweb.com" aria-describedby="url-input-feedback">
+        <p id="url-input-feedback" class="field-feedback" aria-live="polite"></p>
+      </div>
+
+      <!-- Modo Texto libre -->
+      <div id="text-mode" style="display:none;">
+        <label for="text-input">Texto para el código QR</label>
         <textarea id="text-input" placeholder="Escribe o pega tu texto aquí" rows="3"></textarea>
       </div>
 
@@ -268,7 +277,8 @@
           </div>
           <div>
             <label for="vc-email">Email</label>
-            <input type="email" id="vc-email" placeholder="juan@ejemplo.com">
+            <input type="email" id="vc-email" placeholder="juan@ejemplo.com" aria-describedby="vc-email-feedback">
+            <p id="vc-email-feedback" class="field-feedback" aria-live="polite"></p>
           </div>
           <div>
             <label for="vc-org">Empresa</label>
@@ -280,7 +290,8 @@
           </div>
           <div>
             <label for="vc-website">Web</label>
-            <input type="url" id="vc-website" placeholder="https://miweb.com">
+            <input type="url" id="vc-website" inputmode="url" autocapitalize="off" autocorrect="off" spellcheck="false" placeholder="https://miweb.com" aria-describedby="vc-website-feedback">
+            <p id="vc-website-feedback" class="field-feedback" aria-live="polite"></p>
           </div>
           <div class="vcard-full">
             <label for="vc-address">Dirección</label>
@@ -291,17 +302,18 @@
 
       <!-- Botón para generar el QR -->
       <div class="actions" style="margin-top:16px;">
-        <button onclick="generateQRCode()" class="plain-btn" style="flex:1;">
+        <button onclick="generateQRCode(true)" class="plain-btn" style="flex:1;">
           ⚡ Generar código QR
         </button>
       </div>
+      <p id="qr-message" class="field-feedback is-error" role="alert"></p>
 
       <!-- Contenedor del QR generado -->
       <div id="qrcode"></div>
 
       <!-- Tamaño del QR -->
       <label for="resolution">Tamaño del código QR</label>
-      <select id="resolution" onchange="generateQRCode()">
+      <select id="resolution" onchange="generateQRCode(false)">
         <option value="256">📱 Pequeño (256x256)</option>
         <option value="512" selected>📄 Mediano (512x512)</option>
         <option value="768">🖼️ Grande (768x768)</option>
@@ -325,7 +337,8 @@
       <p>Nuestro <strong>generador de códigos QR</strong> te permite crear códigos personalizados de forma totalmente gratuita. Es perfecto para compartir enlaces de Instagram, WhatsApp, URLs de sitios web, o cualquier texto.</p>
 
       <ol>
-        <li>Escribe o pega el texto, URL o enlace que quieras convertir</li>
+        <li>Elige el tipo de código: enlace/URL, texto libre o tarjeta de contacto</li>
+        <li>Escribe o pega tu enlace: comprobamos que la URL sea válida y añadimos <code>https://</code> si falta, para que el QR funcione al escanearlo</li>
         <li>Elige el tamaño (Pequeño, Mediano, Grande o XXL)</li>
         <li>Descarga en PNG para imágenes o SVG para impresión vectorial</li>
       </ol>
@@ -410,13 +423,158 @@
   <script>
     let qr;
 
-    function toggleQRType() {
-      const type = document.getElementById('qr-type').value;
-      document.getElementById('text-mode').style.display = type === 'vcard' ? 'none' : 'block';
-      document.getElementById('vcard-mode').style.display = type === 'vcard' ? 'block' : 'none';
+    // ---------- Validación ----------
+    const OTHER_SCHEME_RE = /^[a-z][a-z0-9+.-]*:(?!\d)/i;
+    const DOMAIN_LABEL_RE = /^[a-z0-9_](?:[a-z0-9_-]{0,61}[a-z0-9_])?$/;
+    const TLD_RE = /^(?:[a-z]{2,63}|xn--[a-z0-9-]{1,59})$/;
+    const IPV4_RE = /^(?:(?:25[0-5]|2[0-4]\d|1?\d?\d)\.){3}(?:25[0-5]|2[0-4]\d|1?\d?\d)$/;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+
+    // Devuelve { url } con la URL normalizada o { error } con el motivo
+    function validateUrl(raw) {
+      const value = raw.trim();
+      if (!value) return { error: 'Introduce una URL.' };
+      if (/\s/.test(value)) return { error: 'La URL no puede contener espacios.' };
+
+      let candidate = value;
+      if (!/^https?:\/\//i.test(candidate)) {
+        if (/^https?:/i.test(candidate)) {
+          return { error: 'Revisa el inicio de la URL: debe empezar por https://' };
+        }
+        if (OTHER_SCHEME_RE.test(candidate)) {
+          return { error: 'Solo se admiten enlaces web (http:// o https://). Para otro contenido elige "Texto libre".' };
+        }
+        // Sin protocolo (ej. "miweb.com"): asumimos https://
+        candidate = 'https://' + candidate;
+      }
+
+      let url;
+      try {
+        url = new URL(candidate);
+      } catch (e) {
+        return { error: 'La URL no tiene un formato válido.' };
+      }
+
+      if (url.username || url.password) {
+        return { error: 'La URL no debe incluir usuario ni contraseña.' };
+      }
+
+      const host = url.hostname;
+      // IPv4 solo si se escribió tal cual (new URL convierte "123" en "0.0.0.123")
+      if (IPV4_RE.test(host)) {
+        return value.toLowerCase().includes(host) ? { url: url.href } : { error: 'La URL no tiene un formato válido.' };
+      }
+
+      const labels = host.split('.');
+      if (labels.length < 2 || !labels[labels.length - 1]) {
+        return { error: 'Falta la extensión del dominio (por ejemplo .com o .es).' };
+      }
+      if (!TLD_RE.test(labels[labels.length - 1])) {
+        return { error: 'La extensión del dominio no es válida (por ejemplo .com o .es).' };
+      }
+      if (host.length > 253 || !labels.every(label => DOMAIN_LABEL_RE.test(label))) {
+        return { error: 'El dominio contiene caracteres no válidos.' };
+      }
+
+      return { url: url.href };
     }
 
-    function buildVCard() {
+    function setFeedback(inputId, message, state) {
+      const input = document.getElementById(inputId);
+      const feedback = document.getElementById(inputId + '-feedback');
+      input.classList.toggle('is-invalid', state === 'error');
+      input.classList.toggle('is-valid', state === 'success');
+      input.setAttribute('aria-invalid', state === 'error' ? 'true' : 'false');
+      feedback.textContent = message || '';
+      feedback.classList.toggle('is-error', state === 'error');
+      feedback.classList.toggle('is-success', state === 'success');
+    }
+
+    function setMessage(message) {
+      document.getElementById('qr-message').textContent = message || '';
+    }
+
+    // Comprueba la URL principal; muestra el error solo si showError
+    function checkUrlInput(showError) {
+      const input = document.getElementById('url-input');
+      const result = validateUrl(input.value);
+      if (!input.value.trim()) {
+        setFeedback('url-input', '', null);
+      } else if (result.url) {
+        setFeedback('url-input', '✓ URL válida: ' + result.url, 'success');
+      } else if (showError) {
+        setFeedback('url-input', result.error, 'error');
+      } else {
+        setFeedback('url-input', '', null);
+      }
+      return result;
+    }
+
+    // Web de la vCard (opcional): devuelve la URL normalizada, '' si está vacía o null si no es válida
+    function checkVCardWebsite(showError) {
+      const web = document.getElementById('vc-website').value.trim();
+      if (!web) {
+        setFeedback('vc-website', '', null);
+        return '';
+      }
+      const result = validateUrl(web);
+      if (result.url) {
+        setFeedback('vc-website', '', 'success');
+        return result.url;
+      }
+      setFeedback('vc-website', showError ? result.error : '', showError ? 'error' : null);
+      return null;
+    }
+
+    // Email de la vCard (opcional)
+    function checkVCardEmail(showError) {
+      const email = document.getElementById('vc-email').value.trim();
+      if (!email) {
+        setFeedback('vc-email', '', null);
+        return true;
+      }
+      if (EMAIL_RE.test(email)) {
+        setFeedback('vc-email', '', 'success');
+        return true;
+      }
+      setFeedback('vc-email', showError ? 'El email no tiene un formato válido.' : '', showError ? 'error' : null);
+      return false;
+    }
+
+    // Campos que ya muestran errores: tras salir del campo o pulsar "Generar"
+    const touchedFields = new Set();
+
+    // Avisa en vivo solo cuando el campo ya se ha tocado: no molesta mientras se escribe
+    function bindLiveValidation(inputId, check) {
+      const input = document.getElementById(inputId);
+      input.addEventListener('blur', () => {
+        if (input.value.trim()) touchedFields.add(inputId);
+        check(touchedFields.has(inputId));
+      });
+      input.addEventListener('input', () => {
+        setMessage('');
+        check(touchedFields.has(inputId));
+      });
+    }
+
+    bindLiveValidation('url-input', checkUrlInput);
+    bindLiveValidation('vc-website', checkVCardWebsite);
+    bindLiveValidation('vc-email', checkVCardEmail);
+
+    document.getElementById('url-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') generateQRCode(true);
+    });
+
+    function toggleQRType() {
+      const type = document.getElementById('qr-type').value;
+      document.getElementById('url-mode').style.display = type === 'url' ? 'block' : 'none';
+      document.getElementById('text-mode').style.display = type === 'text' ? 'block' : 'none';
+      document.getElementById('vcard-mode').style.display = type === 'vcard' ? 'block' : 'none';
+      setMessage('');
+    }
+
+    // web: URL ya validada y normalizada (o '' si no hay)
+    function buildVCard(web) {
       const nombre = document.getElementById('vc-name').value.trim();
       const apellidos = document.getElementById('vc-lastname').value.trim();
       const telefono = document.getElementById('vc-phone').value.trim();
@@ -424,7 +582,6 @@
       const email = document.getElementById('vc-email').value.trim();
       const empresa = document.getElementById('vc-org').value.trim();
       const cargo = document.getElementById('vc-title').value.trim();
-      const web = document.getElementById('vc-website').value.trim();
       const direccion = document.getElementById('vc-address').value.trim();
 
       if (!nombre && !apellidos) {
@@ -448,18 +605,42 @@
       return vcard;
     }
 
-    function generateQRCode() {
+    // userInitiated: true al pulsar "Generar" (muestra errores); false al cambiar el tamaño (silencioso)
+    function generateQRCode(userInitiated) {
       const type = document.getElementById('qr-type').value;
       const resolution = parseInt(document.getElementById('resolution').value);
       const qrContainer = document.getElementById('qrcode');
 
       qrContainer.innerHTML = "";
+      setMessage('');
 
       let texto;
-      if (type === 'vcard') {
-        texto = buildVCard();
+      if (type === 'url') {
+        const urlInput = document.getElementById('url-input');
+        if (userInitiated) touchedFields.add('url-input');
+        const result = checkUrlInput(touchedFields.has('url-input'));
+        if (!result.url) {
+          if (userInitiated) {
+            if (!urlInput.value.trim()) setMessage('Introduce una URL.');
+            urlInput.focus();
+          }
+          return;
+        }
+        texto = result.url;
+      } else if (type === 'vcard') {
+        if (userInitiated) {
+          touchedFields.add('vc-website');
+          touchedFields.add('vc-email');
+        }
+        const web = checkVCardWebsite(touchedFields.has('vc-website'));
+        const emailOk = checkVCardEmail(touchedFields.has('vc-email'));
+        if (web === null || !emailOk) {
+          if (userInitiated) setMessage('Revisa los campos marcados en rojo.');
+          return;
+        }
+        texto = buildVCard(web);
         if (!texto) {
-          alert('Introduce al menos el nombre para generar la tarjeta de contacto.');
+          if (userInitiated) setMessage('Introduce al menos el nombre para generar la tarjeta de contacto.');
           return;
         }
       } else {
@@ -481,7 +662,7 @@
         });
       } catch (e) {
         qrContainer.innerHTML = "";
-        alert('El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.');
+        setMessage('El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.');
       }
     }
 
