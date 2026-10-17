@@ -1,12 +1,12 @@
 const CACHE_NAME = 'fancy-v6';
-const CACHE_VERSION = '5.8.2';
+const CACHE_VERSION = '5.9.0';
 const urlsToCache = [
 	'/',
 	'/index.html',
 	'/share.html',
-	'/styles.css',
-	'/app.js',
-	'/tools.js',
+	'/styles.css?v=5.9.0',
+	'/app.js?v=5.9.0',
+	'/tools.js?v=5.9.0',
 	'/manifest.webmanifest',
 	'/sitemap.xml',
 	'/robots.txt',
@@ -17,6 +17,7 @@ const urlsToCache = [
 	'/letras-aesthetic/',
 	'/fuentes-tiktok/',
 	'/letras-goticas/',
+	'/letras-vikingas/',
 	'/texto-tachado/',
 	'/letras-circulo/',
 	'/letras-cuadrado/',

@@ -36,7 +36,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Generador QR">
-  <link rel="stylesheet" href="/styles.css?v=5.8.2"/>
+  <link rel="stylesheet" href="/styles.css?v=5.9.0"/>
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -92,7 +92,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
   <!-- Alpine.js -->
-  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.4/dist/cdn.min.js"></script>
 </head>
 <body>
   <!-- Navegación compartida -->
@@ -153,6 +153,10 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
             Letras Góticas
           </a>
+          <a href="/letras-vikingas/">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"></path><path d="M2 17l10 5 10-5"></path><path d="M2 12l10 5 10-5"></path></svg>
+            Letras Vikingas
+          </a>
           <a href="/texto-tachado/">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="9" x2="20" y2="15"></line><line x1="4" y1="15" x2="20" y2="9"></line><path d="M12 3v18"></path></svg>
             Texto Tachado
@@ -207,7 +211,7 @@
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg>
             Símbolos Aesthetic
           </a>
-          <a href="/generador-qr/">
+          <a href="/generador-qr/" aria-current="page">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
             Generador QR
           </a>
@@ -219,7 +223,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js"></script>
+  <script src="/sponsored-banner.js?v=5.9.0"></script>
 
   <!-- Breadcrumbs -->
   <div class="breadcrumbs">
@@ -390,6 +394,7 @@
           <li><a href="/letras-aesthetic/">Letras Aesthetic</a></li>
           <li><a href="/fuentes-tiktok/">Fuentes TikTok</a></li>
           <li><a href="/letras-goticas/">Letras Góticas</a></li>
+          <li><a href="/letras-vikingas/">Letras Vikingas</a></li>
           <li><a href="/texto-tachado/">Texto Tachado</a></li>
           <li><a href="/letras-circulo/">Letras en Círculo</a></li>
           <li><a href="/letras-cuadrado/">Letras en Cuadrado</a></li>
@@ -775,7 +780,7 @@
   </script>
 
   <!-- Service Worker y Analytics -->
-  <script type="module" src="/tools.js"></script>
+  <script type="module" src="/tools.js?v=5.9.0"></script>
   <script>
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('/sw.js');

@@ -43,6 +43,8 @@ Since this is a vanilla JavaScript PWA with no build system:
 - Serve files with a local HTTP server (e.g., `python -m http.server` or `npx serve .`)
 - Test PWA features require HTTPS (use ngrok or similar for mobile testing)
 - Service Worker changes require browser dev tools cache clearing
+- Shared nav and footer live in `nav-component.html`. After editing it, adding a page, or bumping `CACHE_VERSION` in `sw.js`, run `node update-nav.js`: it syncs nav/footer/sponsored banner into every page, pins Alpine.js and appends `?v=<CACHE_VERSION>` to `styles.css`, `app.js`, `tools.js` and `sponsored-banner.js` (also in `sw.js`)
+- Test nginx changes with the real image: `docker build -t fancytext-test . && docker run --rm -p 8766:80 fancytext-test`
 
 ## Testing
 

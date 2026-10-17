@@ -5,6 +5,15 @@ README.md
 
 # Documentation
 CLAUDE.md
+AGENTS.md
+
+# Herramientas de desarrollo (no se sirven en producción)
+.claude
+Dockerfile
+.dockerignore
+update-nav.js
+nav-component.html
+test-fonts.html
 
 # Node modules (if any)
 node_modules

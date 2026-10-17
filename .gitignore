@@ -1,0 +1,9 @@
+# Claude Code (configuración local y worktrees)
+.claude/settings.local.json
+.claude/worktrees/
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode
+.idea

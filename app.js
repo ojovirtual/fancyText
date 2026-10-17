@@ -252,48 +252,67 @@ const MAPS = {
 	])
 };
 
-function convert(input, map) {
-	return [...input]
-		.map((ch) => {
-			// No tocar hashtags y menciones
-			if (ch === '#' || ch === '@') return ch;
+// Hashtags y menciones completos (#verano2024, @ana.garcia): si se convierten dejan de funcionar en las redes
+const TAG_RE = /([#@][\p{L}\p{N}_.]*)/u;
 
-			// Buscar por código de carácter
-			const charCode = ch.charCodeAt(0);
-			const mapped = map.get(charCode);
-			if (mapped) return mapped;
-
-			// Caracteres especiales españoles - mantener sin cambio
-			if ('ñÑáéíóúüÁÉÍÓÚÜ¿¡'.includes(ch)) return ch;
-
-			return ch;
-		})
+function mapPreservingTags(input, mapChar) {
+	// split con grupo de captura: las posiciones impares son los hashtags/menciones
+	return input
+		.split(TAG_RE)
+		.map((part, i) => (i % 2 ? part : [...part].map(mapChar).join('')))
 		.join('');
+}
+
+function convert(input, map) {
+	return mapPreservingTags(input, (ch) => {
+		// Buscar por código de carácter
+		const charCode = ch.charCodeAt(0);
+		const mapped = map.get(charCode);
+		if (mapped) return mapped;
+
+		// Caracteres especiales españoles - mantener sin cambio
+		if ('ñÑáéíóúüÁÉÍÓÚÜ¿¡'.includes(ch)) return ch;
+
+		return ch;
+	});
 }
 
 // Función especial para estilos con caracteres combinantes (strikethrough, underline)
 function convertWithCombining(input, combiningChar) {
-	return [...input]
-		.map((ch) => {
-			// No tocar hashtags y menciones
-			if (ch === '#' || ch === '@') return ch;
-			// Espacios sin combinar
-			if (ch === ' ' || ch === '\n' || ch === '\t') return ch;
-			// Añadir carácter combinante después de cada carácter
-			return ch + combiningChar;
-		})
-		.join('');
+	return mapPreservingTags(input, (ch) => {
+		// Espacios sin combinar
+		if (ch === ' ' || ch === '\n' || ch === '\t') return ch;
+		// Añadir carácter combinante después de cada carácter
+		return ch + combiningChar;
+	});
 }
 
 function toPlain(input) {
 	// Reemplazo inverso simple (parcial)
 	const inverse = new Map();
-	Object.values(MAPS).forEach((map) => {
+	// El invertido usa letras normales como destino (d↔p, n↔u...): solo se deshacen dentro de palabras invertidas
+	const invertedAscii = new Map();
+	for (const [style, map] of Object.entries(MAPS)) {
 		for (const [charCode, styledChar] of map) {
-			inverse.set(styledChar, String.fromCharCode(charCode));
+			const plain = String.fromCharCode(charCode);
+			if (styledChar.charCodeAt(0) < 128) {
+				if (style === 'inverted' && styledChar !== plain) invertedAscii.set(styledChar, plain);
+				continue;
+			}
+			inverse.set(styledChar, plain);
 		}
-	});
-	return [...input].map((ch) => inverse.get(ch) || ch).join('');
+	}
+	const invertedOnly = new Set([...MAPS.inverted.values()].filter((ch) => ch.charCodeAt(0) >= 128));
+
+	return input
+		.replace(/[\u0336\u0332]/g, '') // tachado y subrayado
+		.split(/(\s+)/)
+		.map((word) => {
+			const chars = [...word];
+			const isInverted = chars.some((ch) => invertedOnly.has(ch));
+			return chars.map((ch) => inverse.get(ch) || (isInverted && invertedAscii.get(ch)) || ch).join('');
+		})
+		.join('');
 }
 
 // Guardar estado en el historial
