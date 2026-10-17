@@ -252,8 +252,9 @@ const MAPS = {
 	])
 };
 
-// Hashtags y menciones completos (#verano2024, @ana.garcia): si se convierten dejan de funcionar en las redes
-const TAG_RE = /([#@][\p{L}\p{N}_.]*)/u;
+// Enlaces, hashtags y menciones completos (https://..., #verano2024, @ana.garcia):
+// si se convierten dejan de funcionar en las redes
+const TAG_RE = /(https?:\/\/[^\s]+|[#@][\p{L}\p{N}_.]*)/u;
 
 function mapPreservingTags(input, mapChar) {
 	// split con grupo de captura: las posiciones impares son los hashtags/menciones
@@ -530,46 +531,8 @@ function toast(msg) {
 	setTimeout(() => el.remove(), 2600);
 }
 
-// Manejar actualizaciones del Service Worker
-function handleServiceWorkerUpdates() {
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.addEventListener('message', (event) => {
-			const { type, version, url } = event.data;
-
-			if (type === 'SW_UPDATED') {
-				console.log('[App] Service Worker actualizado a versión:', version);
-				reloadApp();
-			}
-
-			if (type === 'CONTENT_UPDATED') {
-				console.log('[App] Contenido actualizado:', url);
-				reloadApp();
-			}
-		});
-
-		// Comprobar actualizaciones al cargar
-		navigator.serviceWorker.ready.then((registration) => {
-			if (registration.waiting) {
-				reloadApp();
-			}
-		});
-	}
-}
-
-function reloadApp() {
-	if ('serviceWorker' in navigator) {
-		navigator.serviceWorker.ready.then((registration) => {
-			if (registration.waiting) {
-				// Activar el service worker que está esperando
-				registration.waiting.postMessage({ type: 'SKIP_WAITING' });
-			}
-			// Recargar la página automáticamente para aplicar los cambios
-			window.location.reload();
-		});
-	}
-}
-
+// El service worker sirve las páginas desde la red: no hace falta recargar al actualizarse
+// (antes se recargaba la página y se perdía lo escrito en el editor)
 window.addEventListener('DOMContentLoaded', () => {
 	bindUI();
-	handleServiceWorkerUpdates();
 });
