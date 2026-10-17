@@ -14,6 +14,7 @@ Dockerfile
 update-nav.js
 nav-component.html
 test-fonts.html
+scripts
 
 # Node modules (if any)
 node_modules
