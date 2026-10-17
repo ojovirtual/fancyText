@@ -693,6 +693,23 @@ button:active, .link:active {
   color: #dc2743;
 }
 
+/* Tema WhatsApp - Verde */
+.feature-banner[data-theme="whatsapp"] {
+  background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+  box-shadow: 0 10px 40px rgba(37, 211, 102, 0.3);
+}
+
+.feature-banner[data-theme="whatsapp"] .banner-cta {
+  color: #128c7e;
+}
+
+/* Botones de estilo usados como enlaces (navegación rastreable) */
+a.style-btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
 .feature-banner.show {
   opacity: 1;
   transform: translateY(0);

@@ -35,7 +35,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Generador QR">
-  <link rel="stylesheet" href="/styles.css?v=5.10.0"/>
+  <link rel="stylesheet" href="/styles.css?v=5.11.0"/>
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -230,7 +230,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js?v=5.10.0"></script>
+  <script src="/sponsored-banner.js?v=5.11.0"></script>
 
   <!-- Breadcrumbs -->
   <div class="breadcrumbs">
@@ -355,6 +355,8 @@
         <li>Descarga en PNG para imágenes o SVG para impresión vectorial</li>
       </ol>
 
+      <p><strong>Truco:</strong> enlaza a <code>fancytext.com.es/generador-qr/?url=https://tuweb.com</code> y el generador se abrirá con el QR de tu web ya creado, listo para descargar.</p>
+
       <h3>Usos populares de códigos QR</h3>
       <ul>
         <li>📱 <strong>Instagram y redes sociales:</strong> Comparte tu perfil fácilmente</li>
@@ -389,6 +391,21 @@
       <p><strong>PNG:</strong> Ideal para usar en redes sociales, sitios web y presentaciones digitales. Todos los tamaños disponibles en alta calidad.</p>
       <p><strong>SVG vectorial:</strong> Perfecto para impresión profesional, tarjetas de visita, pósters. Escalable sin pérdida de calidad, ideal para diseñadores gráficos.</p>
     </section>
+    <!-- Herramientas relacionadas (generado por update-nav.js) -->
+    <section class="seo-content related-tools">
+      <h2>Herramientas relacionadas</h2>
+      <div class="tool-links">
+        <a href="/qr-wifi/">QR WiFi</a>
+        <a href="/qr-whatsapp/">QR WhatsApp</a>
+        <a href="/contador-caracteres/">Contador de Caracteres</a>
+        <a href="/espacio-invisible/">Espacio Invisible</a>
+        <a href="/invertir-texto/">Invertir Texto</a>
+        <a href="/separadores-instagram/">Separadores</a>
+        <a href="/letras-bonitas-whatsapp/">Letras para WhatsApp</a>
+        <a href="/cursiva-instagram/">Cursiva Instagram</a>
+      </div>
+    </section>
+    <!-- /Herramientas relacionadas -->
   </main>
 
   <!-- Footer compartido -->
@@ -434,7 +451,7 @@
     </div>
   </footer>
 
-  <script src="/qr-core.js?v=5.10.0"></script>
+  <script src="/qr-core.js?v=5.11.0"></script>
   <script>
     // Comprueba la URL principal; muestra el error solo si showError
     function checkUrlInput(showError) {
@@ -581,10 +598,26 @@
 
       renderQR(texto, 'El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.');
     }
+
+    // Enlace directo: /generador-qr/?url=https://tuweb.com (o ?texto=...) abre el generador con el QR hecho
+    (function prefillFromQuery() {
+      const params = new URLSearchParams(location.search);
+      const url = params.get('url');
+      const texto = params.get('texto');
+      if (url) {
+        document.getElementById('url-input').value = url;
+        generateQRCode(true);
+      } else if (texto) {
+        document.getElementById('qr-type').value = 'text';
+        toggleQRType();
+        document.getElementById('text-input').value = texto;
+        generateQRCode(true);
+      }
+    })();
   </script>
 
   <!-- Service Worker y Analytics -->
-  <script type="module" src="/tools.js?v=5.10.0"></script>
+  <script type="module" src="/tools.js?v=5.11.0"></script>
   <script>
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('/sw.js');

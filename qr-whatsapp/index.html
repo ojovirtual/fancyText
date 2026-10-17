@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="QR WhatsApp">
-  <link rel="stylesheet" href="/styles.css?v=5.10.0"/>
+  <link rel="stylesheet" href="/styles.css?v=5.11.0"/>
 
   <!-- Biblioteca qrcode-generator desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -179,7 +179,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js?v=5.10.0"></script>
+  <script src="/sponsored-banner.js?v=5.11.0"></script>
 
   <div class="breadcrumbs">
     <a href="/">Inicio</a> → <a href="/generador-qr/">Generador QR</a> → <span>QR WhatsApp</span>
@@ -288,12 +288,22 @@
         <li>Prueba siempre el enlace antes de imprimir el QR.</li>
       </ul>
 
-      <h3>Otros generadores de QR</h3>
+    </section>
+    <!-- Herramientas relacionadas (generado por update-nav.js) -->
+    <section class="seo-content related-tools">
+      <h2>Herramientas relacionadas</h2>
       <div class="tool-links">
-        <a href="/generador-qr/">🔗 QR de enlace, texto o contacto</a>
-        <a href="/qr-wifi/">📶 QR de WiFi</a>
+        <a href="/generador-qr/">Generador QR</a>
+        <a href="/qr-wifi/">QR WiFi</a>
+        <a href="/contador-caracteres/">Contador de Caracteres</a>
+        <a href="/espacio-invisible/">Espacio Invisible</a>
+        <a href="/invertir-texto/">Invertir Texto</a>
+        <a href="/separadores-instagram/">Separadores</a>
+        <a href="/letras-bonitas-whatsapp/">Letras para WhatsApp</a>
+        <a href="/cursiva-instagram/">Cursiva Instagram</a>
       </div>
     </section>
+    <!-- /Herramientas relacionadas -->
   </main>
 
   <footer>
@@ -338,7 +348,7 @@
     </div>
   </footer>
 
-  <script src="/qr-core.js?v=5.10.0"></script>
+  <script src="/qr-core.js?v=5.11.0"></script>
   <script>
     const countrySelect = document.getElementById('wa-country');
     const countryCode = () => countrySelect.value.split(':')[1];

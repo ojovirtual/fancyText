@@ -7,6 +7,7 @@
  *    tomada de CACHE_VERSION en sw.js, para que los navegadores descarguen los cambios
  *  - Metadatos para redes sociales (Open Graph + Twitter) con la imagen de /og/<página>.png
  *  - Datos estructurados (WebApplication + BreadcrumbList) en las páginas que no tienen
+ *  - Bloque de herramientas relacionadas al final de cada página (enlaces internos)
  *  - sitemap.xml (lastmod según git) y la lista de páginas que precachea sw.js
  *
  * Ejecutar con: node update-nav.js
@@ -172,6 +173,39 @@ function syncStructuredData(content, file, eol) {
   return content.replace(/<\/head>/, () => block + eol + '</head>');
 }
 
+// Enlaces internos a herramientas relacionadas, al final del <main>
+const RELATED_START = '<!-- Herramientas relacionadas (generado por update-nav.js) -->';
+const RELATED_END = '<!-- /Herramientas relacionadas -->';
+const RELATED_MAX = 8;
+
+function relatedPages(href) {
+  const current = NAV_PAGES.find((p) => p.href === href);
+  if (!current) return [];
+  const isQR = (p) => p.href.includes('qr');
+  const same = NAV_PAGES.filter((p) => p.section === current.section && p.href !== href)
+    // En las páginas QR, primero las otras páginas QR
+    .sort((a, b) => (isQR(current) ? Number(isQR(b)) - Number(isQR(a)) : 0));
+  const other = NAV_PAGES.filter((p) => p.section !== current.section);
+  return [...same.slice(0, RELATED_MAX - 2), ...other.slice(0, 2)];
+}
+
+function syncRelated(content, file, eol) {
+  content = removeBlock(content, RELATED_START, RELATED_END);
+  const links = relatedPages(pageHref(file));
+  if (!links.length || !content.includes('</main>')) return content;
+  const block = [
+    `    ${RELATED_START}`,
+    '    <section class="seo-content related-tools">',
+    '      <h2>Herramientas relacionadas</h2>',
+    '      <div class="tool-links">',
+    ...links.map((p) => `        <a href="${p.href}">${p.name}</a>`),
+    '      </div>',
+    '    </section>',
+    `    ${RELATED_END}`
+  ].join(eol);
+  return content.replace(/([ \t]*)<\/main>/, (m, indent) => block + eol + indent + '</main>');
+}
+
 function updateFile(file) {
   const filePath = path.join(ROOT, file);
   let content = fs.readFileSync(filePath, 'utf8');
@@ -206,6 +240,7 @@ function updateFile(file) {
   if (file !== '404.html') {
     content = syncSocial(content, file, eol);
     content = syncStructuredData(content, file, eol);
+    if (file !== 'index.html') content = syncRelated(content, file, eol);
   }
 
   if (content !== original) {
