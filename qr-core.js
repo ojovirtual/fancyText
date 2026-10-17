@@ -103,6 +103,7 @@ function qrResolution() {
 function clearQR() {
   document.getElementById('qrcode').innerHTML = '';
   qr = null;
+  hideCard();
 }
 
 // Pinta el QR en #qrcode; devuelve false si el contenido no cabe en un QR
@@ -192,4 +193,164 @@ function downloadQR(format = 'png') {
   canvas.width = canvas.height = size;
   drawQR(canvas.getContext('2d'), 0, 0, size);
   triggerDownload(canvas.toDataURL('image/png'), name + '.png');
+}
+
+// ---------- Utilidades de dibujo ----------
+const CANVAS_FONT = '"Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif';
+
+// Texto en (x, y) que se reduce hasta caber en maxWidth; si ni así cabe, se recorta con "…"
+function fitText(ctx, text, x, y, maxWidth, size, weight, color, minSize = 28) {
+  const setFont = (px) => { ctx.font = `${weight} ${px}px ${CANVAS_FONT}`; };
+  let px = size;
+  setFont(px);
+  while (ctx.measureText(text).width > maxWidth && px > minSize) {
+    px -= 2;
+    setFont(px);
+  }
+  let shown = text;
+  const chars = [...text];
+  while (ctx.measureText(shown).width > maxWidth && chars.length > 1) {
+    chars.pop();
+    shown = chars.join('').trimEnd() + '…';
+  }
+  ctx.fillStyle = color;
+  ctx.fillText(shown, x, y);
+}
+
+function fillRoundRect(ctx, x, y, w, h, r) {
+  ctx.beginPath();
+  ctx.moveTo(x + r, y);
+  ctx.arcTo(x + w, y, x + w, y + h, r);
+  ctx.arcTo(x + w, y + h, x, y + h, r);
+  ctx.arcTo(x, y + h, x, y, r);
+  ctx.arcTo(x, y, x + w, y, r);
+  ctx.closePath();
+  ctx.fill();
+}
+
+// ---------- Imagen vertical 3:4 para enseñar o compartir desde el móvil ----------
+const CARD_W = 1080;
+const CARD_H = 1440;
+const CARD_THEMES = {
+  wifi: ['#2563eb', '#7c3aed'],
+  vcard: ['#0ea5e9', '#4f46e5'],
+  whatsapp: ['#25d366', '#128c7e']
+};
+
+// JPEG: con el fondo degradado pesa ~100 KB frente a ~670 KB en PNG, y el QR se sigue leyendo bien
+const CARD_TYPE = 'image/jpeg';
+const CARD_QUALITY = 0.92;
+
+// Imagen actual: { canvas, file, ready, filename, title }
+let currentCard = null;
+
+// options: { theme, badge, title, subtitle, cta, filename }
+function drawCard(options) {
+  const canvas = document.createElement('canvas');
+  canvas.width = CARD_W;
+  canvas.height = CARD_H;
+  const ctx = canvas.getContext('2d');
+  const cx = CARD_W / 2;
+
+  // Fondo degradado con dos círculos decorativos
+  const [from, to] = CARD_THEMES[options.theme] || CARD_THEMES.vcard;
+  const gradient = ctx.createLinearGradient(0, 0, CARD_W, CARD_H);
+  gradient.addColorStop(0, from);
+  gradient.addColorStop(1, to);
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, CARD_W, CARD_H);
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+  ctx.beginPath();
+  ctx.arc(CARD_W - 60, 80, 260, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.arc(40, CARD_H - 120, 200, 0, Math.PI * 2);
+  ctx.fill();
+
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'alphabetic';
+
+  // Etiqueta del tipo (WiFi, Contacto, WhatsApp)
+  ctx.font = `bold 40px ${CANVAS_FONT}`;
+  const badgeWidth = ctx.measureText(options.badge).width + 72;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+  fillRoundRect(ctx, cx - badgeWidth / 2, 80, badgeWidth, 76, 38);
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(options.badge, cx, 133);
+
+  // Nombre de la red o de la persona, y detalle
+  fitText(ctx, options.title, cx, 272, CARD_W - 140, 84, 'bold', '#ffffff', 40);
+  if (options.subtitle) {
+    fitText(ctx, options.subtitle, cx, 342, CARD_W - 140, 42, '500', 'rgba(255, 255, 255, 0.92)', 26);
+  }
+
+  // Tarjeta blanca con sombra, el QR y la llamada a la acción
+  const boxX = 110;
+  const boxY = 400;
+  const boxW = CARD_W - 220;
+  const boxH = 900;
+  const qrSize = 720;
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.18)';
+  fillRoundRect(ctx, boxX, boxY + 14, boxW, boxH, 48);
+  ctx.fillStyle = '#ffffff';
+  fillRoundRect(ctx, boxX, boxY, boxW, boxH, 48);
+  drawQR(ctx, cx - qrSize / 2, boxY + 40, qrSize);
+  fitText(ctx, options.cta, cx, boxY + 40 + qrSize + 92, boxW - 80, 46, 'bold', '#111827', 28);
+
+  fitText(ctx, 'Crea el tuyo gratis en fancytext.com.es', cx, CARD_H - 52, CARD_W - 140, 30, '500', 'rgba(255, 255, 255, 0.88)', 22);
+  return canvas;
+}
+
+function canShareFiles() {
+  try {
+    return !!(navigator.canShare && navigator.canShare({ files: [new File([''], 'qr.jpg', { type: CARD_TYPE })] }));
+  } catch (e) {
+    return false;
+  }
+}
+
+// Pinta la imagen 3:4 del QR actual en la vista previa (#qr-card)
+function showCard(options) {
+  const section = document.getElementById('qr-card');
+  if (!section || !qr) return;
+  const canvas = drawCard(options);
+  const card = { canvas, file: null, filename: options.filename, title: options.title };
+  currentCard = card;
+
+  const preview = document.getElementById('qr-card-preview');
+  // Se prepara ya el archivo: compartir tiene que ocurrir poco después del clic
+  card.ready = new Promise((resolve) => canvas.toBlob(resolve, CARD_TYPE, CARD_QUALITY)).then((blob) => {
+    card.file = new File([blob], options.filename, { type: CARD_TYPE });
+    if (currentCard === card) {
+      if (preview.dataset.url) URL.revokeObjectURL(preview.dataset.url);
+      preview.dataset.url = URL.createObjectURL(blob);
+      preview.src = preview.dataset.url;
+    }
+    return card.file;
+  });
+
+  section.hidden = false;
+  document.getElementById('qr-card-share').hidden = !canShareFiles();
+}
+
+function hideCard() {
+  const section = document.getElementById('qr-card');
+  if (section) section.hidden = true;
+  currentCard = null;
+}
+
+function downloadCard() {
+  if (!currentCard) return;
+  triggerDownload(currentCard.canvas.toDataURL(CARD_TYPE, CARD_QUALITY), currentCard.filename);
+}
+
+async function shareCard() {
+  if (!currentCard) return;
+  try {
+    const file = currentCard.file || await currentCard.ready;
+    await navigator.share({ files: [file], title: currentCard.title });
+  } catch (e) {
+    // Cancelar el diálogo no es un error; si no se puede compartir, se descarga
+    if (e.name !== 'AbortError') downloadCard();
+  }
 }

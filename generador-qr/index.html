@@ -35,7 +35,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Generador QR">
-  <link rel="stylesheet" href="/styles.css?v=5.11.0"/>
+  <link rel="stylesheet" href="/styles.css?v=5.12.0"/>
 
   <!-- Schema.org JSON-LD -->
   <script type="application/ld+json">
@@ -230,7 +230,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js?v=5.11.0"></script>
+  <script src="/sponsored-banner.js?v=5.12.0"></script>
 
   <!-- Breadcrumbs -->
   <div class="breadcrumbs">
@@ -341,6 +341,16 @@
           📥 Descargar SVG
         </button>
       </div>
+
+      <div id="qr-card" class="qr-card" hidden>
+        <label>📱 Imagen para enseñar o compartir</label>
+        <p class="hint" style="margin-top:0;">Formato vertical 3:4 con tu nombre: enséñala desde el móvil para que te guarden en sus contactos o envíala por WhatsApp.</p>
+        <img id="qr-card-preview" alt="Vista previa de la imagen con el QR de tu tarjeta de contacto" width="270" height="360">
+        <div class="actions text-actions">
+          <button onclick="downloadCard()">📥 Descargar imagen</button>
+          <button id="qr-card-share" onclick="shareCard()" hidden>📤 Compartir</button>
+        </div>
+      </div>
     </section>
 
     <!-- Sección SEO Content -->
@@ -389,6 +399,7 @@
 
       <h3>Formatos de descarga</h3>
       <p><strong>PNG:</strong> Ideal para usar en redes sociales, sitios web y presentaciones digitales. Todos los tamaños disponibles en alta calidad.</p>
+      <p><strong>Imagen para el móvil:</strong> con la tarjeta de contacto también puedes descargar o compartir una imagen vertical con tu nombre y el QR, lista para enseñarla desde el móvil y que te guarden en sus contactos.</p>
       <p><strong>SVG vectorial:</strong> Perfecto para impresión profesional, tarjetas de visita, pósters. Escalable sin pérdida de calidad, ideal para diseñadores gráficos.</p>
     </section>
     <!-- Herramientas relacionadas (generado por update-nav.js) -->
@@ -451,7 +462,7 @@
     </div>
   </footer>
 
-  <script src="/qr-core.js?v=5.11.0"></script>
+  <script src="/qr-core.js?v=5.12.0"></script>
   <script>
     // Comprueba la URL principal; muestra el error solo si showError
     function checkUrlInput(showError) {
@@ -514,6 +525,8 @@
       document.getElementById('text-mode').style.display = type === 'text' ? 'block' : 'none';
       document.getElementById('vcard-mode').style.display = type === 'vcard' ? 'block' : 'none';
       setMessage('');
+      // El QR (y su imagen) era del tipo anterior
+      clearQR();
     }
 
     // Escapa los caracteres especiales de vCard (\ ; , y saltos de línea)
@@ -596,7 +609,19 @@
         return;
       }
 
-      renderQR(texto, 'El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.');
+      if (!renderQR(texto, 'El contenido es demasiado largo para generar un código QR legible. Prueba a acortar el texto o los datos de la tarjeta de contacto.')) return;
+
+      if (type === 'vcard') {
+        const value = (id) => document.getElementById(id).value.trim();
+        showCard({
+          theme: 'vcard',
+          badge: '👤 Contacto',
+          title: [value('vc-name'), value('vc-lastname')].filter(Boolean).join(' '),
+          subtitle: [value('vc-title'), value('vc-org')].filter(Boolean).join(' · '),
+          cta: 'Escanea para añadirme a tus contactos',
+          filename: 'qr-contacto-movil.jpg'
+        });
+      }
     }
 
     // Enlace directo: /generador-qr/?url=https://tuweb.com (o ?texto=...) abre el generador con el QR hecho
@@ -617,7 +642,7 @@
   </script>
 
   <!-- Service Worker y Analytics -->
-  <script type="module" src="/tools.js?v=5.11.0"></script>
+  <script type="module" src="/tools.js?v=5.12.0"></script>
   <script>
     if('serviceWorker' in navigator){
       navigator.serviceWorker.register('/sw.js');

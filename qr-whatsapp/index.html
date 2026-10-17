@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="QR WhatsApp">
-  <link rel="stylesheet" href="/styles.css?v=5.11.0"/>
+  <link rel="stylesheet" href="/styles.css?v=5.12.0"/>
 
   <!-- Biblioteca qrcode-generator desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -179,7 +179,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js?v=5.11.0"></script>
+  <script src="/sponsored-banner.js?v=5.12.0"></script>
 
   <div class="breadcrumbs">
     <a href="/">Inicio</a> → <a href="/generador-qr/">Generador QR</a> → <span>QR WhatsApp</span>
@@ -234,6 +234,9 @@
       <textarea id="wa-message" rows="3" maxlength="500" placeholder="Hola, quiero más información sobre..."></textarea>
       <p class="hint" style="margin-top:6px;"><span id="wa-count">0</span>/500 caracteres. Se escribe solo en el chat; la persona decide si lo envía.</p>
 
+      <label for="wa-name">Tu nombre o negocio (opcional, para la imagen)</label>
+      <input type="text" id="wa-name" maxlength="60" placeholder="Panadería Lola" oninput="if (qr) generateQRCode(false)">
+
       <div class="actions text-actions">
         <button onclick="generateQRCode(true)" class="plain-btn">⚡ Crear link y QR</button>
       </div>
@@ -259,6 +262,16 @@
         <button onclick="downloadQR('png')">📥 Descargar PNG</button>
         <button onclick="downloadQR('svg')">📥 Descargar SVG</button>
       </div>
+
+      <div id="qr-card" class="qr-card" hidden>
+        <label>📱 Imagen para enseñar o compartir</label>
+        <p class="hint" style="margin-top:0;">Formato vertical 3:4 con tu nombre: enséñala desde el móvil o compártela en tus estados y redes para que te escriban.</p>
+        <img id="qr-card-preview" alt="Vista previa de la imagen con el QR de WhatsApp" width="270" height="360">
+        <div class="actions text-actions">
+          <button onclick="downloadCard()">📥 Descargar imagen</button>
+          <button id="qr-card-share" onclick="shareCard()" hidden>📤 Compartir</button>
+        </div>
+      </div>
     </section>
 
     <section class="seo-content">
@@ -266,7 +279,7 @@
       <ol>
         <li>Elige tu <strong>país</strong> y escribe tu <strong>número de WhatsApp</strong> (también sirve WhatsApp Business).</li>
         <li>Si quieres, añade un <strong>mensaje predefinido</strong>, por ejemplo "Hola, quiero pedir cita".</li>
-        <li>Pulsa "Crear link y QR": copia el <strong>enlace wa.me</strong> o descarga el <strong>código QR</strong> en PNG o SVG.</li>
+        <li>Pulsa "Crear link y QR": copia el <strong>enlace wa.me</strong>, descarga el <strong>código QR</strong> en PNG o SVG o comparte una <strong>imagen con tu nombre y el QR</strong> en tus estados y redes.</li>
       </ol>
 
       <h3>¿Qué es un enlace wa.me?</h3>
@@ -348,7 +361,7 @@
     </div>
   </footer>
 
-  <script src="/qr-core.js?v=5.11.0"></script>
+  <script src="/qr-core.js?v=5.12.0"></script>
   <script>
     const countrySelect = document.getElementById('wa-country');
     const countryCode = () => countrySelect.value.split(':')[1];
@@ -456,7 +469,33 @@
       }
       const link = buildLink(number);
       showLink(link);
-      renderQR(link, 'El mensaje es demasiado largo para un código QR legible. Prueba a acortarlo.');
+      if (!renderQR(link, 'El mensaje es demasiado largo para un código QR legible. Prueba a acortarlo.')) return;
+
+      const name = document.getElementById('wa-name').value.trim();
+      const phone = formatPhone(number);
+      showCard({
+        theme: 'whatsapp',
+        badge: '💬 WhatsApp',
+        title: name || phone,
+        subtitle: name ? phone : '',
+        cta: 'Escanea para escribirme por WhatsApp',
+        filename: 'qr-whatsapp-movil.jpg'
+      });
+    }
+
+    // +34 600 111 222 / +52 551 234 5678: prefijo del país seleccionado y el número en grupos legibles
+    const PHONE_GROUPS = { 7: [3, 4], 8: [4, 4], 9: [3, 3, 3], 10: [3, 3, 4], 11: [3, 4, 4] };
+
+    function formatPhone(number) {
+      const code = countryCode();
+      if (!number.startsWith(code)) return '+' + number;
+      const rest = number.slice(code.length);
+      const sizes = PHONE_GROUPS[rest.length];
+      let start = 0;
+      const grouped = sizes
+        ? sizes.map((size) => rest.slice(start, (start += size))).join(' ')
+        : rest.replace(/(\d{3})(?=\d)/g, '$1 ');
+      return '+' + code + ' ' + grouped;
     }
 
     // Copia con la API del portapapeles y, si no está disponible, con un textarea temporal

@@ -31,7 +31,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="QR WiFi">
-  <link rel="stylesheet" href="/styles.css?v=5.11.0"/>
+  <link rel="stylesheet" href="/styles.css?v=5.12.0"/>
 
   <!-- Biblioteca qrcode-generator desde CDN -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js" integrity="sha512-ZDSPMa/JM1D+7kdg2x3BsruQ6T/JpJo3jWDWkCZsP+5yVyp1KfESqLI+7RqB5k24F7p2cV7i2YHh/890y6P6Sw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -179,7 +179,7 @@
 
   <!-- Patrocinado -->
   <div id="sponsored-banner"></div>
-  <script src="/sponsored-banner.js?v=5.11.0"></script>
+  <script src="/sponsored-banner.js?v=5.12.0"></script>
 
   <div class="breadcrumbs">
     <a href="/">Inicio</a> → <a href="/generador-qr/">Generador QR</a> → <span>QR WiFi</span>
@@ -241,11 +241,22 @@
       </div>
 
       <label class="check-label" style="margin-top:16px;">
-        <input type="checkbox" id="poster-show-password" checked>
-        Mostrar la contraseña en el cartel
+        <input type="checkbox" id="poster-show-password" checked onchange="generateQRCode(false)">
+        Mostrar la contraseña en la imagen y en el cartel
       </label>
+
+      <div id="qr-card" class="qr-card" hidden>
+        <label>📱 Imagen para enseñar o compartir</label>
+        <p class="hint" style="margin-top:0;">Formato vertical 3:4 con el nombre de tu red: enséñala desde el móvil para que se conecten o envíala por WhatsApp.</p>
+        <img id="qr-card-preview" alt="Vista previa de la imagen con el QR de la WiFi" width="270" height="360">
+        <div class="actions text-actions">
+          <button onclick="downloadCard()">📥 Descargar imagen</button>
+          <button id="qr-card-share" onclick="shareCard()" hidden>📤 Compartir</button>
+        </div>
+      </div>
+
       <div class="actions text-actions">
-        <button onclick="downloadPoster()">🖨️ Descargar cartel para imprimir</button>
+        <button onclick="downloadPoster()">🖨️ Descargar cartel A4 para imprimir</button>
       </div>
     </section>
 
@@ -255,7 +266,7 @@
         <li>Escribe el <strong>nombre de tu red</strong> (SSID) exactamente como aparece en el móvil, respetando mayúsculas.</li>
         <li>Elige el <strong>tipo de seguridad</strong>: casi todos los routers usan WPA/WPA2/WPA3.</li>
         <li>Escribe la <strong>contraseña</strong> de la WiFi y pulsa "Generar".</li>
-        <li>Descarga el QR en PNG o SVG, o el <strong>cartel listo para imprimir</strong> con el QR y el nombre de la red.</li>
+        <li>Descarga el QR en PNG o SVG, una <strong>imagen vertical para enseñarla desde el móvil</strong> o el <strong>cartel listo para imprimir</strong> con el QR y el nombre de la red.</li>
       </ol>
 
       <h3>¿Dónde encuentro el nombre y la contraseña de mi WiFi?</h3>
@@ -336,7 +347,7 @@
     </div>
   </footer>
 
-  <script src="/qr-core.js?v=5.11.0"></script>
+  <script src="/qr-core.js?v=5.12.0"></script>
   <script>
     const SECURITY = () => document.getElementById('wifi-security').value;
 
@@ -428,17 +439,17 @@
         if (userInitiated) setMessage('Revisa los campos marcados en rojo.');
         return;
       }
-      renderQR(buildWifiString(ssid, password));
-    }
+      if (!renderQR(buildWifiString(ssid, password))) return;
 
-    // Texto centrado que se reduce hasta caber en el ancho disponible
-    function fitText(ctx, text, x, y, maxWidth, size, weight, color) {
-      do {
-        ctx.font = weight + ' ' + size + 'px "Segoe UI", system-ui, -apple-system, Roboto, sans-serif';
-        size -= 2;
-      } while (ctx.measureText(text).width > maxWidth && size > 16);
-      ctx.fillStyle = color;
-      ctx.fillText(text, x, y);
+      const showPassword = document.getElementById('poster-show-password').checked;
+      showCard({
+        theme: 'wifi',
+        badge: '📶 WiFi',
+        title: ssid,
+        subtitle: SECURITY() === 'nopass' ? 'Red abierta, sin contraseña' : (showPassword ? 'Contraseña: ' + password : ''),
+        cta: 'Escanea con la cámara para conectarte',
+        filename: 'qr-wifi-movil.jpg'
+      });
     }
 
     // Cartel A4 (1240x1754) con el QR, el nombre de la red y la contraseña

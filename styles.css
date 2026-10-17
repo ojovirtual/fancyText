@@ -260,6 +260,28 @@ input[type="password"]:focus {
   flex: 0 0 auto;
 }
 
+/* El atributo hidden debe ganar a reglas como .actions button { display: flex } */
+[hidden] {
+  display: none !important;
+}
+
+/* Imagen vertical 3:4 con el QR enmarcado */
+.qr-card {
+  margin-top: 24px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+
+.qr-card img {
+  display: block;
+  width: min(270px, 100%);
+  height: auto;
+  aspect-ratio: 3 / 4;
+  margin: 12px auto 0;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px var(--shadow);
+}
+
 /* Enlace generado (QR WhatsApp) */
 .result-link {
   display: flex;
